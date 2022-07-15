@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Dispatch extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'dispatch_date',
+        'product_id',
+        'quantity',
+    ];
 }
