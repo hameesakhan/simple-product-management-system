@@ -31,7 +31,7 @@
     import Header from "../Components/Header.vue";
     import Sidebar from "../Components/Sidebar.vue";
     import Footer from "../Components/Footer.vue";
-    // import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+    // import VuePerfectScrollbar from 'vue3-perfect-scrollbar'
 
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {

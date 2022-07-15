@@ -17,6 +17,6 @@
     @vite('resources/js/frontend/src/main.js')
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app"><app-component></app-component></div>
 </body>
 </html>

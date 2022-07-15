@@ -1,12 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
-Vue.use(Router);
-
-export default new Router({
+export default createRouter({
     scrollBehavior() {
         return window.scrollTo({ top: 0, behavior: 'smooth' });
     },
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
 
         // Dashboards
@@ -22,19 +20,19 @@ export default new Router({
         {
             path: '/pages/login-boxed',
             name: 'login-boxed',
-            meta: {layout: 'userpages'},
+            meta: { layout: 'userpages' },
             component: () => import('../DemoPages/UserPages/LoginBoxed.vue'),
         },
         {
             path: '/pages/register-boxed',
             name: 'register-boxed',
-            meta: {layout: 'userpages'},
+            meta: { layout: 'userpages' },
             component: () => import('../DemoPages/UserPages/RegisterBoxed.vue'),
         },
         {
             path: '/pages/forgot-password-boxed',
             name: 'forgot-password-boxed',
-            meta: {layout: 'userpages'},
+            meta: { layout: 'userpages' },
             component: () => import('../DemoPages/UserPages/ForgotPasswordBoxed.vue'),
         },
 
