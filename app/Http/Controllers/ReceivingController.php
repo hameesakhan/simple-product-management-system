@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReceivingRequest;
 use App\Models\Receiving;
-use Illuminate\Http\Request;
 
 class ReceivingController extends Controller
 {
@@ -14,17 +14,9 @@ class ReceivingController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Receiving::class);
+        
+        return ['receivings' => Receiving::all()];
     }
 
     /**
@@ -33,9 +25,15 @@ class ReceivingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReceivingRequest $request)
     {
-        //
+        $this->authorize('create', Receiving::class);
+
+        $receiving = new Receiving;
+        $receiving->fill($request->validated());
+        $receiving->save();
+
+        return ['receiving' => $receiving];
     }
 
     /**
@@ -46,18 +44,9 @@ class ReceivingController extends Controller
      */
     public function show(Receiving $receiving)
     {
-        //
-    }
+        $this->authorize('view', $receiving);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Receiving  $receiving
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Receiving $receiving)
-    {
-        //
+        return ['receiving' => $receiving];
     }
 
     /**
@@ -67,9 +56,14 @@ class ReceivingController extends Controller
      * @param  \App\Models\Receiving  $receiving
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Receiving $receiving)
+    public function update(ReceivingRequest $request, Receiving $receiving)
     {
-        //
+        $this->authorize('update', $receiving);
+
+        $receiving->fill($request->validated());
+        $receiving->save();
+
+        return ['receiving' => $receiving];
     }
 
     /**
@@ -80,6 +74,8 @@ class ReceivingController extends Controller
      */
     public function destroy(Receiving $receiving)
     {
-        //
+        $this->authorize('delete', $receiving);
+
+        return ['success' => $receiving->delete()];
     }
 }

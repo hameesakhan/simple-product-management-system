@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VendorRequest;
 use App\Models\Vendor;
-use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
@@ -14,17 +14,9 @@ class VendorController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Vendor::class);
+        
+        return ['vendors' => Vendor::all()];
     }
 
     /**
@@ -33,9 +25,15 @@ class VendorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VendorRequest $request)
     {
-        //
+        $this->authorize('create', Vendor::class);
+
+        $vendor = new Vendor;
+        $vendor->fill($request->validated());
+        $vendor->save();
+
+        return ['vendor' => $vendor];
     }
 
     /**
@@ -46,18 +44,9 @@ class VendorController extends Controller
      */
     public function show(Vendor $vendor)
     {
-        //
-    }
+        $this->authorize('view', $vendor);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Vendor  $vendor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Vendor $vendor)
-    {
-        //
+        return ['vendor' => $vendor];
     }
 
     /**
@@ -67,9 +56,14 @@ class VendorController extends Controller
      * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $vendor)
+    public function update(VendorRequest $request, Vendor $vendor)
     {
-        //
+        $this->authorize('update', $vendor);
+
+        $vendor->fill($request->validated());
+        $vendor->save();
+
+        return ['vendor' => $vendor];
     }
 
     /**
@@ -80,6 +74,8 @@ class VendorController extends Controller
      */
     public function destroy(Vendor $vendor)
     {
-        //
+        $this->authorize('delete', $vendor);
+
+        return ['success' => $vendor->delete()];
     }
 }

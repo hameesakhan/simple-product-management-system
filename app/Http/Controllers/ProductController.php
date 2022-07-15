@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -14,17 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Product::class);
+        
+        return ['products' => Product::all()];
     }
 
     /**
@@ -33,9 +25,15 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $this->authorize('create', Product::class);
+
+        $product = new Product;
+        $product->fill($request->validated());
+        $product->save();
+
+        return ['product' => $product];
     }
 
     /**
@@ -46,18 +44,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
-    }
+        $this->authorize('view', $product);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        //
+        return ['product' => $product];
     }
 
     /**
@@ -67,9 +56,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        $this->authorize('update', $product);
+
+        $product->fill($request->validated());
+        $product->save();
+
+        return ['product' => $product];
     }
 
     /**
@@ -80,6 +74,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $this->authorize('delete', $product);
+
+        return ['success' => $product->delete()];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -14,17 +14,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Transaction::class);
+        
+        return ['transactions' => Transaction::all()];
     }
 
     /**
@@ -33,9 +25,15 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TransactionRequest $request)
     {
-        //
+        $this->authorize('create', Transaction::class);
+
+        $transaction = new Transaction;
+        $transaction->fill($request->validated());
+        $transaction->save();
+
+        return ['transaction' => $transaction];
     }
 
     /**
@@ -46,18 +44,9 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
-    }
+        $this->authorize('view', $transaction);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Transaction $transaction)
-    {
-        //
+        return ['transaction' => $transaction];
     }
 
     /**
@@ -67,9 +56,14 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(TransactionRequest $request, Transaction $transaction)
     {
-        //
+        $this->authorize('update', $transaction);
+
+        $transaction->fill($request->validated());
+        $transaction->save();
+
+        return ['transaction' => $transaction];
     }
 
     /**
@@ -80,6 +74,8 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        //
+        $this->authorize('delete', $transaction);
+
+        return ['success' => $transaction->delete()];
     }
 }

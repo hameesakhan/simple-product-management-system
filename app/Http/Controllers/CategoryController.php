@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -14,17 +14,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Category::class);
+        
+        return ['categories' => Category::all()];
     }
 
     /**
@@ -33,9 +25,15 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $this->authorize('create', Category::class);
+
+        $category = new Category;
+        $category->fill($request->validated());
+        $category->save();
+
+        return ['category' => $category];
     }
 
     /**
@@ -46,18 +44,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
-    }
+        $this->authorize('view', $category);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
+        return ['category' => $category];
     }
 
     /**
@@ -67,9 +56,14 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        $this->authorize('update', $category);
+
+        $category->fill($request->validated());
+        $category->save();
+
+        return ['category' => $category];
     }
 
     /**
@@ -80,6 +74,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->authorize('delete', $category);
+
+        return ['success' => $category->delete()];
     }
 }

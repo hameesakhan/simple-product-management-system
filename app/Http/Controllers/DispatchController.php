@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DispatchRequest;
 use App\Models\Dispatch;
-use Illuminate\Http\Request;
 
 class DispatchController extends Controller
 {
@@ -14,17 +14,9 @@ class DispatchController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Dispatch::class);
+        
+        return ['dispatches' => Dispatch::all()];
     }
 
     /**
@@ -33,9 +25,15 @@ class DispatchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DispatchRequest $request)
     {
-        //
+        $this->authorize('create', Dispatch::class);
+
+        $dispatch = new Dispatch;
+        $dispatch->fill($request->validated());
+        $dispatch->save();
+
+        return ['dispatch' => $dispatch];
     }
 
     /**
@@ -46,18 +44,9 @@ class DispatchController extends Controller
      */
     public function show(Dispatch $dispatch)
     {
-        //
-    }
+        $this->authorize('view', $dispatch);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Dispatch  $dispatch
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Dispatch $dispatch)
-    {
-        //
+        return ['dispatch' => $dispatch];
     }
 
     /**
@@ -67,9 +56,14 @@ class DispatchController extends Controller
      * @param  \App\Models\Dispatch  $dispatch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dispatch $dispatch)
+    public function update(DispatchRequest $request, Dispatch $dispatch)
     {
-        //
+        $this->authorize('update', $dispatch);
+
+        $dispatch->fill($request->validated());
+        $dispatch->save();
+
+        return ['dispatch' => $dispatch];
     }
 
     /**
@@ -80,6 +74,8 @@ class DispatchController extends Controller
      */
     public function destroy(Dispatch $dispatch)
     {
-        //
+        $this->authorize('delete', $dispatch);
+
+        return ['success' => $dispatch->delete()];
     }
 }
