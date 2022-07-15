@@ -30,20 +30,90 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
         ]);
 
-        \App\Models\Product::factory(5000)->create([
-            'category_id' => $category->id,
-            'vendor_id' => $vendor->id,
-            'user_id' => $user->id,
-        ]);
+        // \App\Models\Product::factory(5000)->create([
+        //     'category_id' => $category->id,
+        //     'vendor_id' => $vendor->id,
+        //     'user_id' => $user->id,
+        // ]);
+
+        $totalRowstoInsert = 5000;
+        $rowsInSingleTransaction = 5000;
+        for ($i = 0; $i < ($totalRowstoInsert / $rowsInSingleTransaction); $i++) {
+            $rows = [];
+            for ($j = 0; $j < $rowsInSingleTransaction; $j++) {
+                array_push($rows, [
+                    'name' => fake()->word(),
+                    'category_id' => $category->id,
+                    'vendor_id' => $vendor->id,
+                    'user_id' => $user->id,
+                ]);
+            }
+            \App\Models\Product::insert($rows);
+            $rows = [];
+        }
 
         $product = \App\Models\Product::inRandomOrder()->first();
-        \App\Models\Dispatch::factory(1000000)->create([
-            'product_id' => $product->id,
-            'user_id' => $user->id,
-        ]);
-        \App\Models\Receiving::factory(1000000)->create();
-        
-        \App\Models\Transaction::factory(2000000)->create();
+
+        // \App\Models\Dispatch::factory(1000000)->create([
+        //     'product_id' => $product->id,
+        //     'user_id' => $user->id,
+        // ]);
+        $totalRowstoInsert = 1000000;
+        $rowsInSingleTransaction = 10000;
+        for ($i = 0; $i < ($totalRowstoInsert / $rowsInSingleTransaction); $i++) {
+            $rows = [];
+            for ($j = 0; $j < $rowsInSingleTransaction; $j++) {
+                array_push($rows, [
+                    'quantity' => fake()->randomNumber(2, false),
+                    'dispatch_date' => fake()->date(),
+                    'product_id' => $product->id,
+                    'user_id' => $user->id,
+                ]);
+            }
+            \App\Models\Dispatch::insert($rows);
+            $rows = [];
+        }
+
+        // \App\Models\Receiving::factory(1000000)->create([
+        //     'product_id' => $product->id,
+        //     'user_id' => $user->id,
+        // ]);
+        $totalRowstoInsert = 1000000;
+        $rowsInSingleTransaction = 10000;
+        for ($i = 0; $i < ($totalRowstoInsert / $rowsInSingleTransaction); $i++) {
+            $rows = [];
+            for ($j = 0; $j < $rowsInSingleTransaction; $j++) {
+                array_push($rows, [
+                    'quantity' => fake()->randomNumber(2, false),
+                    'receiving_date' => fake()->date(),
+                    'product_id' => $product->id,
+                    'user_id' => $user->id,
+                ]);
+            }
+            \App\Models\Receiving::insert($rows);
+            $rows = [];
+        }
+
+        // \App\Models\Transaction::factory(2000000)->create([
+        //     'product_id' => $product->id,
+        //     'user_id' => $user->id,
+        // ]);
+        $totalRowstoInsert = 2000000;
+        $rowsInSingleTransaction = 10000;
+        for ($i = 0; $i < ($totalRowstoInsert / $rowsInSingleTransaction); $i++) {
+            $rows = [];
+            for ($j = 0; $j < $rowsInSingleTransaction; $j++) {
+                array_push($rows, [
+                    'quantity' => fake()->randomNumber(2, false),
+                    'transaction_date' => fake()->date(),
+                    'transaction_type' => fake()->randomElement(['IN', 'OUT']),
+                    'product_id' => $product->id,
+                    'user_id' => $user->id,
+                ]);
+            }
+            \App\Models\Transaction::insert($rows);
+            $rows = [];
+        }
 
         $this->call([
             RoleSeeder::class,
