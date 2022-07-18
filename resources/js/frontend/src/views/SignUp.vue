@@ -22,10 +22,7 @@
                 <div
                   class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
                   :style="{
-                    backgroundImage:
-                      'url(' +
-                      require('@/assets/img/illustrations/illustration-signin.jpg') +
-                      ')',
+                    backgroundImage: img1,
                   }"
                 ></div>
               </div>
@@ -119,6 +116,7 @@ import MaterialCheckbox  from "../components/MaterialCheckbox.vue";
 import MaterialButton  from "../components/MaterialButton.vue";
 const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
+import img1 from "../assets/img/illustrations/illustration-signin.jpg"
 
 export default {
   name: "sign-up",
@@ -127,6 +125,7 @@ export default {
     MaterialInput,
     MaterialCheckbox,
     MaterialButton,
+    img1
   },
   beforeMount() {
     this.toggleEveryDisplay();

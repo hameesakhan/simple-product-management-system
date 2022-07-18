@@ -3,7 +3,7 @@
     <div
       class="overflow-hidden position-relative border-radius-xl"
       :style="{
-        backgroundImage: 'url(' + require('@/assets/img/curved14.jpg') + ')',
+        backgroundImage: img2,
       }"
     >
       <span class="mask" :class="`bg-gradient-${card.background}`"></span>
@@ -43,6 +43,7 @@
 import MaterialAvatar  from "../../components/MaterialAvatar.vue";
 import { mapState } from "vuex";
 import img1 from "../../assets/img/logos/mastercard.png";
+import img2 from "../../assets/img/curved14.jpg";
 
 export default {
   name: "MasterCard",
@@ -71,6 +72,7 @@ export default {
   data() {
     return {
       img1,
+      img2
     };
   },
   computed: {
