@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -31,8 +32,10 @@ class CategoryController extends Controller
 
         $category = new Category;
         $category->fill($request->validated());
+        $category->user_id = Auth::id();
         $category->save();
 
+        $category->load('user');
         return ['category' => $category];
     }
 

@@ -45,7 +45,7 @@ export async function fetchCategory({ commit }, { id }) {
 
 export async function createCategory({ commit }, category) {
     try {
-        const response = await axios.post('/categories', category)
+        const response = await axios.post('/api/category', category)
         commit('ADD_CATEGORY', response.data.category)
     }
     catch (error) {

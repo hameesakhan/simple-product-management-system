@@ -34,7 +34,7 @@
                 <tbody>
                   <tr>
                     <td>
-
+                      <p class="text-xs font-weight-bold mb-0">NEW</p>
                     </td>
                     <td>
                       <div class="d-flex px-2 py-1">
@@ -48,19 +48,19 @@
                       </div>
                     </td>
                     <td class="align-middle text-center text-sm">
-                      
+
                     </td>
                     <td class="align-middle text-center">
-                      
+
                     </td>
                     <td class="align-middle text-center">
-                      
+
                     </td>
                     <td class="align-middle">
-                      <button @click="createCategory" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                        data-original-title="Add Category">
-                        Add
-                      </button>
+                      <material-button color="dark" variant="gradient" @click="createCategory">
+                        <i class="fas fa-plus me-2"></i>
+                        Add New Category
+                      </material-button>
                     </td>
                   </tr>
 
@@ -71,24 +71,50 @@
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{ category.name }}</h6>
+                          <h6 class="mb-0 text-sm" v-if="category.id !== activeCategory?.id">{{ category.name }}</h6>
+
+                          <div class="input-group input-group-outline" v-if="category.id === activeCategory?.id">
+                            <label class="form-label">Name</label>
+                            <input v-model="activeCategory.name" type="text" class="form-control form-control-default"
+                              placeholder="" isrequired="false">
+                          </div>
                         </div>
                       </div>
                     </td>
                     <td class="align-middle text-center text-sm">
-                      <span class="badge badge-sm bg-gradient-success">{{ category.user.name }}</span>
+                      <span class="badge badge-sm bg-gradient-success">{{
+                          category.user.name
+                      }}</span>
                     </td>
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">{{ category.created_at }}</span>
+                      <span class="text-secondary text-xs font-weight-bold">{{
+                          category.created_at
+                      }}</span>
                     </td>
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">{{ category.updated_at }}</span>
+                      <span class="text-secondary text-xs font-weight-bold">{{
+                          category.updated_at
+                      }}</span>
                     </td>
                     <td class="align-middle">
-                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                        data-original-title="Edit user">
+                      <material-button color="dark" variant="gradient" @click="editCategory(category)"
+                        v-if="category.id !== activeCategory?.id">
+                        <i class="fas fa-edit me-2"></i>
                         Edit
-                      </a>
+                      </material-button>
+
+                      <material-button color="dark" variant="gradient" @click="deleteCategory(category)"
+                        v-if="category.id !== activeCategory?.id">
+                        <i class="fas fa-trash me-2"></i>
+                        Delete
+                      </material-button>
+
+                      <material-button color="dark" variant="gradient" @click="updateCategory()"
+                        v-if="category.id === activeCategory?.id">
+                        <i class="fas fa-floppy-o me-2"></i>
+                        Save
+                      </material-button>
+
                     </td>
                   </tr>
                 </tbody>
@@ -114,6 +140,7 @@ export default {
   data: function () {
     return {
       showCreateModal: false,
+      activeCategory: null,
       category: {
         name: ''
       }
@@ -131,8 +158,24 @@ export default {
     toggleCreateModal() {
       this.showCreateModal = !this.showCreateModal
     },
-    createCategory(){
-      
+    createCategory() {
+      this.$store.dispatch("createCategory", this.category).then(() => {
+        this.category.name = '';
+      })
+    },
+    deleteCategory(category) {
+      this.$store.dispatch("deleteCategory", category)
+    },
+    editCategory(category) {
+      this.$store.dispatch("fetchCategory", category).then(() => {
+        this.activeCategory = this.$store.state.activeCategory;
+      })
+    },
+    updateCategory() {
+      this.$store.dispatch("updateCategory", this.activeCategory).then(() => {
+        this.activeCategory = null;
+        this.$store.dispatch("fetchCategories");
+      });
     }
   }
 };
