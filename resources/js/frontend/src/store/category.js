@@ -65,17 +65,6 @@ export async function updateCategory({ commit }, category) {
     }
 }
 
-export async function markCategoryComplete({ commit }, category) {
-    try {
-        const response = await axios.put('/api/category/' + category.id, { ...category, is_complete: true })
-        commit('CHANGE_CATEGORY', response.data.category)
-    }
-    catch (error) {
-        alert(error)
-        console.log(error)
-    }
-}
-
 export async function deleteCategory({ commit }, { id }) {
     try {
         const response = await axios.delete('/api/category/' + id)

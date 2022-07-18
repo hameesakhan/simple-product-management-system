@@ -3,6 +3,9 @@ import { createStore } from "vuex";
 import { SET_CATEGORIES, SET_ACTIVE_CATEGORY, ADD_CATEGORY, CHANGE_CATEGORY, REMOVE_CATEGORY } from './category'
 import { fetchCategories, fetchCategory, createCategory, updateCategory, deleteCategory } from './category'
 
+import { SET_VENDORS, SET_ACTIVE_VENDOR, ADD_VENDOR, CHANGE_VENDOR, REMOVE_VENDOR } from './vendor'
+import { fetchVendors, fetchVendor, createVendor, updateVendor, deleteVendor } from './vendor'
+
 export default createStore({
   state: {
     hideConfigButton: false,
@@ -59,14 +62,20 @@ export default createStore({
 
     // Categories
     SET_CATEGORIES, SET_ACTIVE_CATEGORY, ADD_CATEGORY, CHANGE_CATEGORY, REMOVE_CATEGORY,
+
+    // Vendors
+    SET_VENDORS, SET_ACTIVE_VENDOR, ADD_VENDOR, CHANGE_VENDOR, REMOVE_VENDOR,
   },
   actions: {
     setColor({ commit }, payload) {
       commit("color", payload);
     },
-    
+
     // Categories
     fetchCategories, fetchCategory, createCategory, updateCategory, deleteCategory,
+
+    // Vendors
+    fetchVendors, fetchVendor, createVendor, updateVendor, deleteVendor,
   },
   getters: {},
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VendorRequest;
 use App\Models\Vendor;
+use Illuminate\Support\Facades\Auth;
 
 class VendorController extends Controller
 {
@@ -16,7 +17,7 @@ class VendorController extends Controller
     {
         $this->authorize('viewAny', Vendor::class);
         
-        return ['vendors' => Vendor::all()];
+        return ['vendors' => Vendor::with('user')->get()];
     }
 
     /**
@@ -31,7 +32,9 @@ class VendorController extends Controller
 
         $vendor = new Vendor;
         $vendor->fill($request->validated());
+        $vendor->user_id = Auth::id();
         $vendor->save();
+        $vendor->load('user');
 
         return ['vendor' => $vendor];
     }
@@ -45,6 +48,7 @@ class VendorController extends Controller
     public function show(Vendor $vendor)
     {
         $this->authorize('view', $vendor);
+        $vendor->load('user');
 
         return ['vendor' => $vendor];
     }
@@ -62,6 +66,7 @@ class VendorController extends Controller
 
         $vendor->fill($request->validated());
         $vendor->save();
+        $vendor->load('user');
 
         return ['vendor' => $vendor];
     }

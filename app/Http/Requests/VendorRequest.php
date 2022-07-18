@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class VendorRequest extends FormRequest
 {
@@ -23,8 +24,18 @@ class VendorRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|max:100|unique:vendors'
-        ];
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'name' => 'required|string|max:100|unique:vendors',
+                ];
+                break;
+            case 'PUT':
+            case 'PATCH':
+                return [
+                    'name' => ['required', 'string', 'max:100', Rule::unique('vendors')->ignore($this->vendor)],
+                ];
+                break;
+        }
     }
 }

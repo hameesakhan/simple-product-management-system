@@ -65,17 +65,6 @@ export async function updateProduct({ commit }, product) {
     }
 }
 
-export async function markProductComplete({ commit }, product) {
-    try {
-        const response = await axios.put('/api/product/' + product.id, { ...product, is_complete: true })
-        commit('CHANGE_PRODUCT', response.data.product)
-    }
-    catch (error) {
-        alert(error)
-        console.log(error)
-    }
-}
-
 export async function deleteProduct({ commit }, { id }) {
     try {
         const response = await axios.delete('/api/product/' + id)
