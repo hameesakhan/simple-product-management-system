@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProductRequest extends FormRequest
 {
@@ -23,13 +24,29 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|max:100|unique:products',
-            'category_id' => 'bail|required|numeric|exists:categories,id',
-            'rate' => 'required|numeric',
-            'quantity' => 'required|numeric',
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'name' => 'required|string|max:100|unique:products',
+                    'category_id' => 'bail|required|numeric|exists:categories,id',
+                    'rate' => 'required|numeric',
+                    'quantity' => 'required|numeric',
 
-            'vendor_id' => 'bail|required|numeric|exists:vendors,id',
-        ];
+                    'vendor_id' => 'bail|required|numeric|exists:vendors,id',
+                ];
+                break;
+            case 'PUT':
+            case 'PATCH':
+                return [
+                    'name' => ['required', 'string', 'max:100', Rule::unique('products')->ignore($this->product)],
+                    'category_id' => 'bail|required|numeric|exists:categories,id',
+                    'rate' => 'required|numeric',
+                    'quantity' => 'required|numeric',
+
+                    'vendor_id' => 'bail|required|numeric|exists:vendors,id',
+                ];
+                break;
+        }
+
     }
 }

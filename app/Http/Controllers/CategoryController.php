@@ -48,6 +48,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $this->authorize('view', $category);
+        $product->load('user');
 
         return ['category' => $category];
     }
@@ -65,6 +66,7 @@ class CategoryController extends Controller
 
         $category->fill($request->validated());
         $category->save();
+        $product->load('user');
 
         return ['category' => $category];
     }

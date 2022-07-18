@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $this->authorize('viewAny', Product::class);
         
-        return ['products' => Product::all()];
+        return ['products' => Product::with('user')->get()];
     }
 
     /**
@@ -31,8 +31,10 @@ class ProductController extends Controller
 
         $product = new Product;
         $product->fill($request->validated());
+        $product->user_id = Auth::id();
         $product->save();
 
+        $product->load('user');
         return ['product' => $product];
     }
 
@@ -45,6 +47,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $this->authorize('view', $product);
+        $product->load('user');
 
         return ['product' => $product];
     }
@@ -62,6 +65,7 @@ class ProductController extends Controller
 
         $product->fill($request->validated());
         $product->save();
+        $product->load('user');
 
         return ['product' => $product];
     }
