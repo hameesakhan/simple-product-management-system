@@ -14,6 +14,9 @@
                 <thead>
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      Barcode
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                       ID
                     </th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -45,6 +48,8 @@
                 </thead>
                 <tbody>
                   <tr>
+                    <td>
+                    </td>
                     <td>
                       <p class="text-xs font-weight-bold mb-0">NEW</p>
                     </td>
@@ -120,6 +125,20 @@
                   </tr>
 
                   <tr v-for="product in products">
+                    <td>
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">
+
+                          <svg class="barcode" jsbarcode-format="auto" :jsbarcode-value="product.barcode_identifier"
+                            jsbarcode-textmargin="0" jsbarcode-fontoptions="bold">
+                          </svg>
+
+                        </h6>
+                        <!-- <p class="text-xs text-secondary mb-0">
+                          {{ product.barcode_identifier }}
+                        </p> -->
+                      </div>
+                    </td>
                     <td>
                       <p class="text-xs font-weight-bold mb-0">{{ product.id }}</p>
                     </td>
@@ -239,6 +258,7 @@
 import MaterialButton from "../components/MaterialButton.vue";
 import MaterialModal from "../components/MaterialModal.vue";
 import moment from 'moment'
+import JsBarcode from 'jsbarcode'
 
 export default {
   name: "Products",
@@ -267,7 +287,9 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("fetchProducts");
+    this.$store.dispatch("fetchProducts").then(() => {
+      JsBarcode(".barcode").init();
+    });
     this.$store.dispatch("fetchCategories");
     this.$store.dispatch("fetchVendors");
   },
@@ -279,6 +301,7 @@ export default {
     createProduct() {
       this.$store.dispatch("createProduct", this.product).then(() => {
         this.product.name = '';
+        JsBarcode(".barcode").init();
       })
     },
     deleteProduct(product) {
@@ -292,7 +315,6 @@ export default {
     updateProduct() {
       this.$store.dispatch("updateProduct", this.activeProduct).then(() => {
         this.activeProduct = null;
-        this.$store.dispatch("fetchProducts");
       });
     }
   }

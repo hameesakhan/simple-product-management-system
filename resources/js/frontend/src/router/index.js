@@ -3,6 +3,7 @@ import Dashboard from "../views/Dashboard.vue";
 import Categories from "../views/Categories.vue";
 import Vendors from "../views/Vendors.vue";
 import Products from "../views/Products.vue";
+import Transactions from "../views/Transactions.vue";
 import Tables from "../views/Tables.vue";
 import Billing from "../views/Billing.vue";
 import RTL from "../views/Rtl.vue";
@@ -36,6 +37,11 @@ const routes = [
     path: "/products/:entityId?/:action?",
     name: "Products",
     component: Products,
+  },
+  {
+    path: "/transactions/:entityId?/:action?",
+    name: "Transactions",
+    component: Transactions,
   },
   {
     path: "/tables",

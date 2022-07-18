@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(Category::class);
             $table->decimal('rate', 10, 2)->nullable();
             $table->unsignedBigInteger('quantity')->required()->default(0);
+            $table->string('barcode_identifier', 50)->nullable()->default(null);
 
             $table->foreignIdFor(Vendor::class);
             $table->foreignIdFor(User::class);

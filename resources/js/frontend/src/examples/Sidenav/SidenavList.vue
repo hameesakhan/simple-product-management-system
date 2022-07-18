@@ -74,6 +74,19 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
+          collapseRef="transactions"
+          navText="Transactions"
+        >
+          <template v-slot:icon>
+            <i class="material-icons-round opacity-10 fs-5">receipt_long</i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse
+          url="#"
+          :aria-controls="''"
+          v-bind:collapse="false"
           collapseRef="billing"
           navText="Billing"
         >

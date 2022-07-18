@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Product::class);
-        
+
         return ['products' => Product::with(['user', 'vendor', 'category'])->get()];
     }
 
@@ -33,6 +33,14 @@ class ProductController extends Controller
         $product = new Product;
         $product->fill($request->validated());
         $product->user_id = Auth::id();
+
+        do {
+            // Using EAN-14 (13 digit code)
+            $barcodeIdentifier = sprintf("%'.013d", rand(0, 999999999999));
+        } while (
+            Product::where('barcode_identifier', $barcodeIdentifier)->count()
+        );
+        $product->barcode_identifier = $barcodeIdentifier;
         $product->save();
 
         $product->load(['user', 'vendor', 'category']);
