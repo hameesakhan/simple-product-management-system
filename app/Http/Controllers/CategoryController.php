@@ -15,8 +15,8 @@ class CategoryController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Category::class);
-        
-        return ['categories' => Category::all()];
+
+        return ['categories' => Category::with('user')->get()];
     }
 
     /**

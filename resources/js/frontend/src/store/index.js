@@ -1,5 +1,8 @@
 import { createStore } from "vuex";
 
+import { SET_CATEGORIES, SET_ACTIVE_CATEGORY, ADD_CATEGORY, CHANGE_CATEGORY, REMOVE_CATEGORY } from './category'
+import { fetchCategories, fetchCategory, createCategory, updateCategory, deleteCategory } from './category'
+
 export default createStore({
   state: {
     hideConfigButton: false,
@@ -53,11 +56,17 @@ export default createStore({
     color(state, payload) {
       state.color = payload;
     },
+
+    // Categories
+    SET_CATEGORIES, SET_ACTIVE_CATEGORY, ADD_CATEGORY, CHANGE_CATEGORY, REMOVE_CATEGORY,
   },
   actions: {
     setColor({ commit }, payload) {
       commit("color", payload);
     },
+    
+    // Categories
+    fetchCategories, fetchCategory, createCategory, updateCategory, deleteCategory,
   },
   getters: {},
 });

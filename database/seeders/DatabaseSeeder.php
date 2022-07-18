@@ -14,11 +14,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call([
+            RoleSeeder::class,
+        ]);
 
         $user = \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Super Admin',
+            'email' => 'abc@def.gh',
         ]);
+        $user->syncRoles(['Super Admin']);
 
         $category = \App\Models\Category::factory()->create([
             'name' => 'Test Category',
@@ -30,8 +34,5 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
         ]);
 
-        $this->call([
-            RoleSeeder::class,
-        ]);
     }
 }

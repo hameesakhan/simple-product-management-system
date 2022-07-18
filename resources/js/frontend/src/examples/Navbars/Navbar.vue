@@ -21,15 +21,16 @@
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
-            <router-link
-              :to="{ name: 'SignIn' }"
+            <a
+              href="#"
+              @click="logout"
               class="px-0 nav-link font-weight-bold lh-1"
               :class="color ? color : 'text-body'"
             >
               <i class="material-icons" :class="isRTL ? 'ms-sm-2' : 'me-sm-1'">
                 account_circle
               </i>
-            </router-link>
+            </a>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
@@ -188,6 +189,7 @@
 import MaterialInput  from "../../components/MaterialInput.vue";
 import Breadcrumbs from "../Breadcrumbs.vue";
 import { mapMutations, mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "navbar",
@@ -206,6 +208,12 @@ export default {
     toggleSidebar() {
       this.navbarMinimize();
     },
+
+    logout(){
+      axios.post('/logout').then(response => {
+        window.location = "/login";
+      });
+    }
   },
   components: {
     Breadcrumbs,
