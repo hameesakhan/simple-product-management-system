@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -16,7 +17,7 @@ class ProductController extends Controller
     {
         $this->authorize('viewAny', Product::class);
         
-        return ['products' => Product::with('user')->get()];
+        return ['products' => Product::with(['user', 'vendor', 'category'])->get()];
     }
 
     /**
@@ -34,7 +35,7 @@ class ProductController extends Controller
         $product->user_id = Auth::id();
         $product->save();
 
-        $product->load('user');
+        $product->load(['user', 'vendor', 'category']);
         return ['product' => $product];
     }
 
@@ -47,7 +48,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $this->authorize('view', $product);
-        $product->load('user');
+        $product->load(['user', 'vendor', 'category']);
 
         return ['product' => $product];
     }
@@ -65,7 +66,7 @@ class ProductController extends Controller
 
         $product->fill($request->validated());
         $product->save();
-        $product->load('user');
+        $product->load(['user', 'vendor', 'category']);
 
         return ['product' => $product];
     }

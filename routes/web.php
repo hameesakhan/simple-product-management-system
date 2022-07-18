@@ -29,13 +29,13 @@ Route::view('vendors', 'home');
 Route::view('vendors/:id', 'home');
 Route::view('vendors/:id/edit', 'home');
 
+Route::view('products', 'home');
+Route::view('products/:id', 'home');
+Route::view('products/:id/edit', 'home');
+
 // Route::view('dispatches', 'home');
 // Route::view('dispatches/:id', 'home');
 // Route::view('dispatches/:id/edit', 'home');
-
-// Route::view('products', 'home');
-// Route::view('products/:id', 'home');
-// Route::view('products/:id/edit', 'home');
 
 // Route::view('receivings', 'home');
 // Route::view('receivings/:id', 'home');

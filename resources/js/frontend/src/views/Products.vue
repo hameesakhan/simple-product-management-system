@@ -19,6 +19,18 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                       Name
                     </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                      Rate
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                      Quantity
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                      Vendor
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                      Category
+                    </th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                       Created By
                     </th>
@@ -43,6 +55,54 @@
                             <label class="form-label">Name</label>
                             <input v-model="product.name" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <div class="input-group input-group-outline null">
+                            <label class="form-label">Rate</label>
+                            <input v-model="product.rate" type="text" class="form-control form-control-default"
+                              placeholder="" isrequired="true">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <div class="input-group input-group-outline null">
+                            <label class="form-label">Quantity</label>
+                            <input v-model="product.quantity" type="text" class="form-control form-control-default"
+                              placeholder="" isrequired="false">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <div class="input-group input-group-outline null">
+                            <label class="form-label">Vendor</label>
+                            <select v-model="product.vendor_id" class="form-control form-control-default">
+                              <option></option>
+                              <option v-for="vendor in vendors" :value="vendor.id">{{ vendor.name }}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <div class="input-group input-group-outline null">
+                            <label class="form-label">Category</label>
+                            <select v-model="product.category_id" class="form-control form-control-default">
+                              <option></option>
+                              <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -77,6 +137,62 @@
                             <label class="form-label">Name</label>
                             <input v-model="activeProduct.name" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.rate }}</h6>
+
+                          <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
+                            <label class="form-label">Rate</label>
+                            <input v-model="activeProduct.rate" type="text" class="form-control form-control-default"
+                              placeholder="" isrequired="false">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.quantity }}</h6>
+
+                          <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
+                            <label class="form-label">Quantity</label>
+                            <input v-model="activeProduct.quantity" type="text" class="form-control form-control-default"
+                              placeholder="" isrequired="false">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.vendor.name }}</h6>
+
+                          <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
+                            <label class="form-label">Quantity</label>
+                            <select v-model="product.vendor_id" class="form-control form-control-default">
+                              <option></option>
+                              <option v-for="vendor in vendors" :value="vendor.id">{{ vendor.name }}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.category.name }}</h6>
+
+                          <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
+                            <label class="form-label">Quantity</label>
+                            <select v-model="product.category_id" class="form-control form-control-default">
+                              <option></option>
+                              <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -150,9 +266,17 @@ export default {
     products() {
       return this.$store.state.products;
     },
+    vendors() {
+      return this.$store.state.vendors;
+    },
+    categories() {
+      return this.$store.state.categories;
+    },
   },
   mounted() {
     this.$store.dispatch("fetchProducts");
+    this.$store.dispatch("fetchCategories");
+    this.$store.dispatch("fetchVendors");
   },
   methods: {
     toggleCreateModal() {

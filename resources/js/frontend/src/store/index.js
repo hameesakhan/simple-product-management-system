@@ -6,6 +6,9 @@ import { fetchCategories, fetchCategory, createCategory, updateCategory, deleteC
 import { SET_VENDORS, SET_ACTIVE_VENDOR, ADD_VENDOR, CHANGE_VENDOR, REMOVE_VENDOR } from './vendor'
 import { fetchVendors, fetchVendor, createVendor, updateVendor, deleteVendor } from './vendor'
 
+import { SET_PRODUCTS, SET_ACTIVE_PRODUCT, ADD_PRODUCT, CHANGE_PRODUCT, REMOVE_PRODUCT } from './product'
+import { fetchProducts, fetchProduct, createProduct, updateProduct, deleteProduct } from './product'
+
 export default createStore({
   state: {
     hideConfigButton: false,
@@ -65,6 +68,9 @@ export default createStore({
 
     // Vendors
     SET_VENDORS, SET_ACTIVE_VENDOR, ADD_VENDOR, CHANGE_VENDOR, REMOVE_VENDOR,
+
+    // Products
+    SET_PRODUCTS, SET_ACTIVE_PRODUCT, ADD_PRODUCT, CHANGE_PRODUCT, REMOVE_PRODUCT,
   },
   actions: {
     setColor({ commit }, payload) {
@@ -76,6 +82,9 @@ export default createStore({
 
     // Vendors
     fetchVendors, fetchVendor, createVendor, updateVendor, deleteVendor,
+
+    // Products
+    fetchProducts, fetchProduct, createProduct, updateProduct, deleteProduct,
   },
   getters: {},
 });
