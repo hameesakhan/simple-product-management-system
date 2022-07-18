@@ -52,7 +52,6 @@
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
                           <div class="input-group input-group-outline null">
-                            <label class="form-label">Name</label>
                             <input v-model="product.name" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
                           </div>
@@ -63,7 +62,6 @@
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
                           <div class="input-group input-group-outline null">
-                            <label class="form-label">Rate</label>
                             <input v-model="product.rate" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="true">
                           </div>
@@ -74,7 +72,6 @@
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
                           <div class="input-group input-group-outline null">
-                            <label class="form-label">Quantity</label>
                             <input v-model="product.quantity" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
                           </div>
@@ -85,7 +82,6 @@
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
                           <div class="input-group input-group-outline null">
-                            <label class="form-label">Vendor</label>
                             <select v-model="product.vendor_id" class="form-control form-control-default">
                               <option></option>
                               <option v-for="vendor in vendors" :value="vendor.id">{{ vendor.name }}</option>
@@ -98,7 +94,6 @@
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
                           <div class="input-group input-group-outline null">
-                            <label class="form-label">Category</label>
                             <select v-model="product.category_id" class="form-control form-control-default">
                               <option></option>
                               <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
@@ -134,7 +129,6 @@
                           <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.name }}</h6>
 
                           <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
-                            <label class="form-label">Name</label>
                             <input v-model="activeProduct.name" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
                           </div>
@@ -147,7 +141,6 @@
                           <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.rate }}</h6>
 
                           <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
-                            <label class="form-label">Rate</label>
                             <input v-model="activeProduct.rate" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
                           </div>
@@ -160,9 +153,8 @@
                           <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.quantity }}</h6>
 
                           <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
-                            <label class="form-label">Quantity</label>
-                            <input v-model="activeProduct.quantity" type="text" class="form-control form-control-default"
-                              placeholder="" isrequired="false">
+                            <input v-model="activeProduct.quantity" type="text"
+                              class="form-control form-control-default" placeholder="" isrequired="false">
                           </div>
                         </div>
                       </div>
@@ -170,10 +162,10 @@
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.vendor.name }}</h6>
+                          <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.vendor.name }}
+                          </h6>
 
                           <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
-                            <label class="form-label">Quantity</label>
                             <select v-model="product.vendor_id" class="form-control form-control-default">
                               <option></option>
                               <option v-for="vendor in vendors" :value="vendor.id">{{ vendor.name }}</option>
@@ -185,10 +177,10 @@
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.category.name }}</h6>
+                          <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.category.name }}
+                          </h6>
 
                           <div class="input-group input-group-outline" v-if="product.id === activeProduct?.id">
-                            <label class="form-label">Quantity</label>
                             <select v-model="product.category_id" class="form-control form-control-default">
                               <option></option>
                               <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
@@ -204,12 +196,12 @@
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">{{
-                          product.created_at
+                          moment(product.created_at).fromNow()
                       }}</span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">{{
-                          product.updated_at
+                          moment(product.updated_at).fromNow()
                       }}</span>
                     </td>
                     <td class="align-middle">
@@ -246,6 +238,7 @@
 <script>
 import MaterialButton from "../components/MaterialButton.vue";
 import MaterialModal from "../components/MaterialModal.vue";
+import moment from 'moment'
 
 export default {
   name: "Products",
@@ -279,6 +272,7 @@ export default {
     this.$store.dispatch("fetchVendors");
   },
   methods: {
+    moment,
     toggleCreateModal() {
       this.showCreateModal = !this.showCreateModal
     },

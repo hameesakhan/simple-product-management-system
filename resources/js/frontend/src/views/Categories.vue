@@ -40,7 +40,6 @@
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
                           <div class="input-group input-group-outline null">
-                            <label class="form-label">Name</label>
                             <input v-model="category.name" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
                           </div>
@@ -74,7 +73,6 @@
                           <h6 class="mb-0 text-sm" v-if="category.id !== activeCategory?.id">{{ category.name }}</h6>
 
                           <div class="input-group input-group-outline" v-if="category.id === activeCategory?.id">
-                            <label class="form-label">Name</label>
                             <input v-model="activeCategory.name" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
                           </div>
@@ -88,12 +86,12 @@
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">{{
-                          category.created_at
+                          moment(category.created_at).fromNow()
                       }}</span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">{{
-                          category.updated_at
+                          moment(category.updated_at).fromNow()
                       }}</span>
                     </td>
                     <td class="align-middle">
@@ -130,6 +128,7 @@
 <script>
 import MaterialButton from "../components/MaterialButton.vue";
 import MaterialModal from "../components/MaterialModal.vue";
+import moment from 'moment'
 
 export default {
   name: "Categories",
@@ -155,6 +154,7 @@ export default {
     this.$store.dispatch("fetchCategories");
   },
   methods: {
+    moment,
     toggleCreateModal() {
       this.showCreateModal = !this.showCreateModal
     },
