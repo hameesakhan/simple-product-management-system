@@ -142,10 +142,10 @@
 </template>
 
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
-import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialSwitch from "@/components/MaterialSwitch.vue";
-import MaterialButton from "@/components/MaterialButton.vue";
+import Navbar  from "../examples/PageLayout/Navbar.vue";
+import MaterialInput  from "../components/MaterialInput.vue";
+import MaterialSwitch  from "../components/MaterialSwitch.vue";
+import MaterialButton  from "../components/MaterialButton.vue";
 import { mapMutations } from "vuex";
 
 export default {

@@ -141,7 +141,7 @@
 
 <script>
 import { mapMutations, mapState, mapActions } from "vuex";
-import { activateDarkMode, deactivateDarkMode } from "@/assets/js/dark-mode.js";
+import { activateDarkMode, deactivateDarkMode }  from "../assets/js/dark-mode.js";
 
 export default {
   name: "configurator",

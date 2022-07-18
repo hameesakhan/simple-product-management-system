@@ -561,23 +561,23 @@
 <script>
 import ProfileInfoCard from "./components/ProfileInfoCard.vue";
 import DefaultProjectCard from "./components/DefaultProjectCard.vue";
-import MaterialSwitch from "@/components/MaterialSwitch.vue";
-import MaterialAvatar from "@/components/MaterialAvatar.vue";
-import sophie from "@/assets/img/kal-visuals-square.jpg";
-import marie from "@/assets/img/marie.jpg";
-import ivana from "@/assets/img/ivana-square.jpg";
-import peterson from "@/assets/img/team-4.jpg";
-import nick from "@/assets/img/team-3.jpg";
-import img1 from "@/assets/img/home-decor-1.jpg";
-import img2 from "@/assets/img/home-decor-2.jpg";
-import img3 from "@/assets/img/home-decor-3.jpg";
-import team1 from "@/assets/img/team-1.jpg";
-import team2 from "@/assets/img/team-2.jpg";
-import team3 from "@/assets/img/team-3.jpg";
-import team4 from "@/assets/img/team-4.jpg";
+import MaterialSwitch  from "../components/MaterialSwitch.vue";
+import MaterialAvatar  from "../components/MaterialAvatar.vue";
+import sophie  from "../assets/img/kal-visuals-square.jpg";
+import marie  from "../assets/img/marie.jpg";
+import ivana  from "../assets/img/ivana-square.jpg";
+import peterson  from "../assets/img/team-4.jpg";
+import nick  from "../assets/img/team-3.jpg";
+import img1  from "../assets/img/home-decor-1.jpg";
+import img2  from "../assets/img/home-decor-2.jpg";
+import img3  from "../assets/img/home-decor-3.jpg";
+import team1  from "../assets/img/team-1.jpg";
+import team2  from "../assets/img/team-2.jpg";
+import team3  from "../assets/img/team-3.jpg";
+import team4  from "../assets/img/team-4.jpg";
 
-import setNavPills from "@/assets/js/nav-pills.js";
-import setTooltip from "@/assets/js/tooltip.js";
+import setNavPills  from "../assets/js/nav-pills.js";
+import setTooltip  from "../assets/js/tooltip.js";
 
 export default {
   name: "profile-overview",

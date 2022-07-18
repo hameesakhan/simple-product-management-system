@@ -69,9 +69,9 @@
 </template>
 
 <script>
-import MaterialButton from "@/components/MaterialButton.vue";
-import img1 from "@/assets/img/logos/mastercard.png";
-import img2 from "@/assets/img/logos/visa.png";
+import MaterialButton  from "../../components/MaterialButton.vue";
+import img1  from "../../assets/img/logos/mastercard.png";
+import img2  from "../../assets/img/logos/visa.png";
 
 export default {
   name: "payment-card",

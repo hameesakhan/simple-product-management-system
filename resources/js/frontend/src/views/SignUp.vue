@@ -113,10 +113,10 @@
 </template>
 
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
-import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialCheckbox from "@/components/MaterialCheckbox.vue";
-import MaterialButton from "@/components/MaterialButton.vue";
+import Navbar  from "../examples/PageLayout/Navbar.vue";
+import MaterialInput  from "../components/MaterialInput.vue";
+import MaterialCheckbox  from "../components/MaterialCheckbox.vue";
+import MaterialButton  from "../components/MaterialButton.vue";
 const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
 
