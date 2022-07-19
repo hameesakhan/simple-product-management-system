@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\DataTables\UsersDataTable;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {

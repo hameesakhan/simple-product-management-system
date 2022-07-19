@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('category', App\Http\Controllers\API\CategoryController::class);
     Route::apiResource('dispatch', App\Http\Controllers\API\DispatchController::class);
@@ -25,4 +21,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('receiving', App\Http\Controllers\API\ReceivingController::class);
     Route::apiResource('transaction', App\Http\Controllers\API\TransactionController::class);
     Route::apiResource('vendor', App\Http\Controllers\API\VendorController::class);
+
+    // Route::get('user', function(){
+    //     return ['users' => \App\Models\User::all()];
+    // });
+    Route::apiResource('user', App\Http\Controllers\API\UserController::class);
 });

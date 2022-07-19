@@ -4,6 +4,7 @@ import Categories from "../views/Categories.vue";
 import Vendors from "../views/Vendors.vue";
 import Products from "../views/Products.vue";
 import Transactions from "../views/Transactions.vue";
+import Users from "../views/Users.vue";
 import Tables from "../views/Tables.vue";
 import Billing from "../views/Billing.vue";
 import RTL from "../views/Rtl.vue";
@@ -42,6 +43,11 @@ const routes = [
     path: "/transactions/:entityId?/:action?",
     name: "Transactions",
     component: Transactions,
+  },
+  {
+    path: "/users/:entityId?/:action?",
+    name: "Users",
+    component: Users,
   },
   {
     path: "/tables",

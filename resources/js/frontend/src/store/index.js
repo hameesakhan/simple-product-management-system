@@ -12,6 +12,9 @@ import { fetchProducts, fetchProduct, createProduct, updateProduct, deleteProduc
 import { SET_TRANSACTIONS, SET_ACTIVE_TRANSACTION, ADD_TRANSACTION, CHANGE_TRANSACTION, REMOVE_TRANSACTION } from './transaction'
 import { fetchTransactions, fetchTransaction, createTransaction, updateTransaction, deleteTransaction } from './transaction'
 
+import { SET_USERS, SET_ACTIVE_USER, ADD_USER, CHANGE_USER, REMOVE_USER } from './user'
+import { fetchUsers, fetchUser, createUser, updateUser, deleteUser } from './user'
+
 export default createStore({
   state: {
     hideConfigButton: false,
@@ -77,6 +80,9 @@ export default createStore({
 
     // Transactions
     SET_TRANSACTIONS, SET_ACTIVE_TRANSACTION, ADD_TRANSACTION, CHANGE_TRANSACTION, REMOVE_TRANSACTION,
+
+    // Users
+    SET_USERS, SET_ACTIVE_USER, ADD_USER, CHANGE_USER, REMOVE_USER,
   },
   actions: {
     setColor({ commit }, payload) {
@@ -94,6 +100,9 @@ export default createStore({
 
     // Transactions
     fetchTransactions, fetchTransaction, createTransaction, updateTransaction, deleteTransaction,
+
+    // Users
+    fetchUsers, fetchUser, createUser, updateUser, deleteUser
   },
   getters: {},
 });
