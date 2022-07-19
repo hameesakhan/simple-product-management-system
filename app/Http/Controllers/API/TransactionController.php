@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class TransactionController extends Controller
 {

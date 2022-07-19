@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Requests\DispatchRequest;
 use App\Models\Dispatch;
+use App\Http\Controllers\Controller;
 
 class DispatchController extends Controller
 {

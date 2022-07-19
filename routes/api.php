@@ -19,10 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::apiResource('category', App\Http\Controllers\CategoryController::class);
-    Route::apiResource('dispatch', App\Http\Controllers\DispatchController::class);
-    Route::apiResource('product', App\Http\Controllers\ProductController::class);
-    Route::apiResource('receiving', App\Http\Controllers\ReceivingController::class);
-    Route::apiResource('transaction', App\Http\Controllers\TransactionController::class);
-    Route::apiResource('vendor', App\Http\Controllers\VendorController::class);
+    Route::apiResource('category', App\Http\Controllers\API\CategoryController::class);
+    Route::apiResource('dispatch', App\Http\Controllers\API\DispatchController::class);
+    Route::apiResource('product', App\Http\Controllers\API\ProductController::class);
+    Route::apiResource('receiving', App\Http\Controllers\API\ReceivingController::class);
+    Route::apiResource('transaction', App\Http\Controllers\API\TransactionController::class);
+    Route::apiResource('vendor', App\Http\Controllers\API\VendorController::class);
 });

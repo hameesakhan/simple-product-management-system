@@ -37,6 +37,8 @@ Route::view('transactions', 'home');
 Route::view('transactions/:id', 'home');
 Route::view('transactions/:id/edit', 'home');
 
+Route::get('users', [App\Http\Controllers\UserController::class, 'index']);
+
 // Route::view('dispatches', 'home');
 // Route::view('dispatches/:id', 'home');
 // Route::view('dispatches/:id/edit', 'home');

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Requests\VendorRequest;
 use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class VendorController extends Controller
 {

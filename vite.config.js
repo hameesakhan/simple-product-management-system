@@ -3,6 +3,9 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
+    optimizeDeps: {
+        exclude: ["jquery"],
+    },
     plugins: [
         laravel([
             'resources/sass/app.scss',
@@ -24,4 +27,15 @@ export default defineConfig({
             '@': 'resources/js/frontend/src'
         },
     },
+    // build: {
+    //     rollupOptions: {
+    //         external: ['jquery'],
+    //         output: {
+    //             globals: {
+    //                 jquery: 'window.jQuery',
+    //                 jquery: 'window.$'
+    //             }
+    //         }
+    //     }
+    // }
 });

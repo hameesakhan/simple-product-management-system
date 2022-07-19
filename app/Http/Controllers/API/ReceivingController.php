@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Requests\ReceivingRequest;
 use App\Models\Receiving;
+use App\Http\Controllers\Controller;
 
 class ReceivingController extends Controller
 {
