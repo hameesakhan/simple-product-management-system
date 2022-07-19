@@ -33,6 +33,10 @@ Route::view('products', 'home');
 Route::view('products/:id', 'home');
 Route::view('products/:id/edit', 'home');
 
+Route::view('transactions', 'home');
+Route::view('transactions/:id', 'home');
+Route::view('transactions/:id/edit', 'home');
+
 // Route::view('dispatches', 'home');
 // Route::view('dispatches/:id', 'home');
 // Route::view('dispatches/:id/edit', 'home');
@@ -40,7 +44,3 @@ Route::view('products/:id/edit', 'home');
 // Route::view('receivings', 'home');
 // Route::view('receivings/:id', 'home');
 // Route::view('receivings/:id/edit', 'home');
-
-// Route::view('transactions', 'home');
-// Route::view('transactions/:id', 'home');
-// Route::view('transactions/:id/edit', 'home');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -15,8 +16,8 @@ class TransactionController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Transaction::class);
-        
-        return ['transactions' => Transaction::all()];
+
+        return ['transactions' => Transaction::with(['product', 'user'])->orderBy('created_at', 'DESC')->get()];
     }
 
     /**
@@ -31,8 +32,10 @@ class TransactionController extends Controller
 
         $transaction = new Transaction;
         $transaction->fill($request->validated());
+        $transaction->user_id = Auth::id();
         $transaction->save();
 
+        $transaction->load(['product', 'user']);
         return ['transaction' => $transaction];
     }
 
@@ -46,6 +49,7 @@ class TransactionController extends Controller
     {
         $this->authorize('view', $transaction);
 
+        $transaction->load(['product', 'user']);
         return ['transaction' => $transaction];
     }
 
@@ -58,6 +62,7 @@ class TransactionController extends Controller
      */
     public function update(TransactionRequest $request, Transaction $transaction)
     {
+        abort(403);
         $this->authorize('update', $transaction);
 
         $transaction->fill($request->validated());

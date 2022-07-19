@@ -9,6 +9,9 @@ import { fetchVendors, fetchVendor, createVendor, updateVendor, deleteVendor } f
 import { SET_PRODUCTS, SET_ACTIVE_PRODUCT, ADD_PRODUCT, CHANGE_PRODUCT, REMOVE_PRODUCT } from './product'
 import { fetchProducts, fetchProduct, createProduct, updateProduct, deleteProduct } from './product'
 
+import { SET_TRANSACTIONS, SET_ACTIVE_TRANSACTION, ADD_TRANSACTION, CHANGE_TRANSACTION, REMOVE_TRANSACTION } from './transaction'
+import { fetchTransactions, fetchTransaction, createTransaction, updateTransaction, deleteTransaction } from './transaction'
+
 export default createStore({
   state: {
     hideConfigButton: false,
@@ -71,6 +74,9 @@ export default createStore({
 
     // Products
     SET_PRODUCTS, SET_ACTIVE_PRODUCT, ADD_PRODUCT, CHANGE_PRODUCT, REMOVE_PRODUCT,
+
+    // Transactions
+    SET_TRANSACTIONS, SET_ACTIVE_TRANSACTION, ADD_TRANSACTION, CHANGE_TRANSACTION, REMOVE_TRANSACTION,
   },
   actions: {
     setColor({ commit }, payload) {
@@ -85,6 +91,9 @@ export default createStore({
 
     // Products
     fetchProducts, fetchProduct, createProduct, updateProduct, deleteProduct,
+
+    // Transactions
+    fetchTransactions, fetchTransaction, createTransaction, updateTransaction, deleteTransaction,
   },
   getters: {},
 });

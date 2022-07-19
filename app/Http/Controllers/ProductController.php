@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -13,9 +14,19 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Product::class);
+
+        if ($request->has('barcode_identifier')) {
+            $this->validate($request, [
+                'barcode_identifier' => 'required|numeric',
+            ]);
+            $barcodeIdentifier = $request->query('barcode_identifier');
+
+            $product = Product::where('barcode_identifier', $barcodeIdentifier)->firstOrFail();
+            return ['product' => $product];
+        }
 
         return ['products' => Product::with(['user', 'vendor', 'category'])->get()];
     }
@@ -36,7 +47,7 @@ class ProductController extends Controller
 
         do {
             // Using EAN-14 (13 digit code)
-            $barcodeIdentifier = sprintf("%'.013d", rand(0, 999999999999));
+            $barcodeIdentifier = random_int(1000000000000, 9999999999999);
         } while (
             Product::where('barcode_identifier', $barcodeIdentifier)->count()
         );

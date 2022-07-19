@@ -1,11 +1,11 @@
 <?php
 
+use App\Models\Category;
+use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Category;
-use App\Models\Vendor;
-use App\Models\User;
 
 return new class extends Migration
 {
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(Category::class);
             $table->decimal('rate', 10, 2)->nullable();
             $table->unsignedBigInteger('quantity')->required()->default(0);
-            $table->string('barcode_identifier', 50)->nullable()->default(null);
+            $table->unsignedBigInteger('barcode_identifier')->nullable()->default(null);
 
             $table->foreignIdFor(Vendor::class);
             $table->foreignIdFor(User::class);
