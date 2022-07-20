@@ -9,7 +9,7 @@ export function SET_ACTIVE_TRANSACTION(state, transaction) {
 }
 
 export function ADD_TRANSACTION(state, transaction) {
-    state.transactions = [...state.transactions, transaction]
+    state.transactions = [transaction, ...state.transactions]
 }
 
 export function CHANGE_TRANSACTION(state, transaction) {

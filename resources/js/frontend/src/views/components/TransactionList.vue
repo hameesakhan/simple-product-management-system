@@ -110,7 +110,7 @@ export default {
       showCreateModal: false,
       activeTransaction: null,
       transaction: {
-        transaction_date: moment().format('Y-m-d'),
+        transaction_date: moment().format('Y-MM-D'),
         product: { barcode_identifier: '' },
         transaction_type: 'IN',
         quantity: 0
@@ -146,7 +146,6 @@ export default {
           if (err.response) {
             // handle err
             this.transaction.product.barcode_identifier = '';
-            this.initQuagga();
             console.log(err);
             this.$swal(err.response.statusText, err.response.data.message, 'err');
           }
@@ -176,7 +175,6 @@ export default {
     barcodeHandler(e) {
       console.log("Barcode detected");
       if (e.codeResult.format == 'code_128') {
-        this.stopQuagga();
         this.transaction.product.barcode_identifier = e.codeResult.code;
         this.transaction.quantity = 1;
         this.searchProduct();
