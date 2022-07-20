@@ -29,6 +29,7 @@
         "datatables.net-vue3": "^1.0.0",
         "jquery": "^3.6.0",
         "jsbarcode": "^3.11.5",
+        "laravel-vue-pagination": "^3.0.0",
         "moment": "^2.29.4",
         "quagga": "^0.12.1",
         "vue-router": "^4.1.2",

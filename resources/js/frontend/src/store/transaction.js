@@ -4,6 +4,11 @@ export function SET_TRANSACTIONS(state, transactions) {
     state.transactions = transactions
 }
 
+export function SET_TRANSACTIONS_PAGINATION(state, paginate) {
+    state.transactions_total = paginate.total
+    state.transactions_per_page = paginate.per_page
+}
+
 export function SET_ACTIVE_TRANSACTION(state, transaction) {
     state.activeTransaction = transaction
 }
@@ -21,10 +26,11 @@ export function REMOVE_TRANSACTION(state, id) {
     state.transactions = newList;
 }
 
-export async function fetchTransactions({ commit }) {
+export async function fetchTransactions({ commit }, page = 1) {
     try {
-        const response = await axios.get('/api/transaction')
-        commit('SET_TRANSACTIONS', response.data.data)
+        const response = await axios.get(`/api/transaction?page=${page}`)
+        commit('SET_TRANSACTIONS', response.data.transactions.data)
+        commit('SET_TRANSACTIONS_PAGINATION', { total: response.data.total, per_page: response.data.per_page })
     }
     catch (error) {
         alert(error)

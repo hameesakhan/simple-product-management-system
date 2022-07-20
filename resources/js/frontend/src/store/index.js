@@ -9,7 +9,7 @@ import { fetchVendors, fetchVendor, createVendor, updateVendor, deleteVendor } f
 import { SET_PRODUCTS, SET_ACTIVE_PRODUCT, ADD_PRODUCT, CHANGE_PRODUCT, REMOVE_PRODUCT } from './product'
 import { fetchProducts, fetchProduct, createProduct, updateProduct, deleteProduct } from './product'
 
-import { SET_TRANSACTIONS, SET_ACTIVE_TRANSACTION, ADD_TRANSACTION, CHANGE_TRANSACTION, REMOVE_TRANSACTION } from './transaction'
+import { SET_TRANSACTIONS, SET_TRANSACTIONS_PAGINATION, SET_ACTIVE_TRANSACTION, ADD_TRANSACTION, CHANGE_TRANSACTION, REMOVE_TRANSACTION } from './transaction'
 import { fetchTransactions, fetchTransaction, createTransaction, updateTransaction, deleteTransaction } from './transaction'
 
 import { SET_USERS, SET_ACTIVE_USER, ADD_USER, CHANGE_USER, REMOVE_USER } from './user'
@@ -79,7 +79,7 @@ export default createStore({
     SET_PRODUCTS, SET_ACTIVE_PRODUCT, ADD_PRODUCT, CHANGE_PRODUCT, REMOVE_PRODUCT,
 
     // Transactions
-    SET_TRANSACTIONS, SET_ACTIVE_TRANSACTION, ADD_TRANSACTION, CHANGE_TRANSACTION, REMOVE_TRANSACTION,
+    SET_TRANSACTIONS, SET_TRANSACTIONS_PAGINATION, SET_ACTIVE_TRANSACTION, ADD_TRANSACTION, CHANGE_TRANSACTION, REMOVE_TRANSACTION,
 
     // Users
     SET_USERS, SET_ACTIVE_USER, ADD_USER, CHANGE_USER, REMOVE_USER,

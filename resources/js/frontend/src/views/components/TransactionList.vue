@@ -92,6 +92,7 @@
           </div>
         </li>
       </ul>
+      <pagination align="center" :data="paginationData" @pagination-change-page="list" />
     </div>
   </div>
 </template>
@@ -100,10 +101,12 @@
 import moment from 'moment'
 import axios from 'axios'
 import Quagga from 'quagga';
+import Pagination from 'laravel-vue-pagination'
 
 export default {
   name: "transaction-list",
   components: {
+    Pagination
   },
   data: function () {
     return {
@@ -114,6 +117,13 @@ export default {
         product: { barcode_identifier: '' },
         transaction_type: 'IN',
         quantity: 0
+      },
+      paginationData: {
+        "total": 0,
+        'current_page': 1,
+        'per_page': 0,
+        'prev_page_url': null,
+        'next_page_url': null,
       }
     }
   },
@@ -124,6 +134,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("fetchTransactions");
+    this.list(1);
   },
   methods: {
     moment,
@@ -247,6 +258,19 @@ export default {
       while (preview.firstChild) {
         preview.removeChild(preview.lastChild);
       }
+    },
+    list(page = 1) {
+      this.$store.dispatch("fetchTransactions", page).then(() => {
+        const total = this.$store.state.transactions_total;
+        const perPage = this.$store.state.transactions_per_page;
+        this.paginationData = {
+          "total": total,
+          'current_page': page,
+          'per_page': perPage,
+          'prev_page_url': page == 1 ? null : '/api/transaction?page=' + (page - 1),
+          'next_page_url': page == (total / perPage) ? null : '/api/transaction?page=' + page + 1,
+        };
+      });
     }
   }
 };

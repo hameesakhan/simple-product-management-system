@@ -18,7 +18,12 @@ class TransactionController extends Controller
     {
         $this->authorize('viewAny', Transaction::class);
 
-        return Transaction::with(['product', 'user'])->orderBy('created_at', 'DESC')->paginate(50);
+        // return Transaction::with(['product', 'user'])->orderBy('created_at', 'DESC')->paginate(50);
+        return [
+            'transactions' => Transaction::with(['product', 'user'])->orderBy('created_at', 'DESC')->simplePaginate(50),
+            'total' => Transaction::count(),
+            'per_page' => 50,
+        ];
     }
 
     /**
