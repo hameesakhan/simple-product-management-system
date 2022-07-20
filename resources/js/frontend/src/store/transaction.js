@@ -24,7 +24,7 @@ export function REMOVE_TRANSACTION(state, id) {
 export async function fetchTransactions({ commit }) {
     try {
         const response = await axios.get('/api/transaction')
-        commit('SET_TRANSACTIONS', response.data.transactions)
+        commit('SET_TRANSACTIONS', response.data.data)
     }
     catch (error) {
         alert(error)

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 
 class TransactionController extends Controller
 {
@@ -18,7 +18,7 @@ class TransactionController extends Controller
     {
         $this->authorize('viewAny', Transaction::class);
 
-        return ['transactions' => Transaction::with(['product', 'user'])->orderBy('created_at', 'DESC')->get()];
+        return Transaction::with(['product', 'user'])->orderBy('created_at', 'DESC')->paginate(50);
     }
 
     /**
