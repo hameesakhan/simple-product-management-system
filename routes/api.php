@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,4 +25,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //     return ['users' => \App\Models\User::all()];
     // });
     Route::apiResource('user', App\Http\Controllers\API\UserController::class);
+
+    Route::group(['prefix' => 'charts'], function () {
+        Route::get('ins', [App\Http\Controllers\API\ChartController::class, 'ins']);
+        Route::get('outs', [App\Http\Controllers\API\ChartController::class, 'outs']);
+        Route::get('transactions', [App\Http\Controllers\API\ChartController::class, 'transactions']);
+        Route::get('insnouts', [App\Http\Controllers\API\ChartController::class, 'insnouts']);
+    });
 });

@@ -14,13 +14,7 @@
                 <thead>
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                      Barcode
-                    </th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                      ID
-                    </th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                      Name
+                      Product
                     </th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                       Rate
@@ -48,11 +42,6 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">NEW</p>
-                    </td>
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
@@ -126,24 +115,13 @@
 
                   <tr v-for="product in products">
                     <td>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">
-
-                          <svg class="barcode" jsbarcode-format="auto" :jsbarcode-value="product.barcode_identifier"
-                            jsbarcode-textmargin="0" jsbarcode-fontoptions="bold">
-                          </svg>
-
-                        </h6>
-                        <!-- <p class="text-xs text-secondary mb-0">
-                          {{ product.barcode_identifier }}
-                        </p> -->
-                      </div>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">{{ product.id }}</p>
-                    </td>
-                    <td>
                       <div class="d-flex px-2 py-1">
+                        <div>
+                          <svg class="barcode avatar me-3 border-radius-lg" alt="user6" jsbarcode-format="auto"
+                            :jsbarcode-value="product.barcode_identifier" jsbarcode-textmargin="0"
+                            jsbarcode-fontoptions="bold">
+                          </svg>
+                        </div>
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="mb-0 text-sm" v-if="product.id !== activeProduct?.id">{{ product.name }}</h6>
 
@@ -151,6 +129,9 @@
                             <input v-model="activeProduct.name" type="text" class="form-control form-control-default"
                               placeholder="" isrequired="false">
                           </div>
+                          <p class="text-xs text-secondary mb-0">
+                            {{ product.barcode_identifier }}
+                          </p>
                         </div>
                       </div>
                     </td>
@@ -238,7 +219,7 @@
 
                       <material-button color="dark" variant="gradient" @click="updateProduct()"
                         v-if="product.id === activeProduct?.id">
-                        <i class="fas fa-floppy-o me-2"></i>
+                        <i class="fas fa-save me-2"></i>
                         Save
                       </material-button>
 
