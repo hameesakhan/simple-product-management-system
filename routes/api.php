@@ -30,6 +30,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('ins', [App\Http\Controllers\API\ChartController::class, 'ins']);
         Route::get('outs', [App\Http\Controllers\API\ChartController::class, 'outs']);
         Route::get('transactions', [App\Http\Controllers\API\ChartController::class, 'transactions']);
+        
+        Route::get('top-products', [App\Http\Controllers\API\ChartController::class, 'topProducts']);
+        Route::get('hot-products', [App\Http\Controllers\API\ChartController::class, 'hotProducts']);
+        
         Route::get('insnouts', [App\Http\Controllers\API\ChartController::class, 'insnouts']);
     });
 });

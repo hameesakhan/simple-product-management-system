@@ -46,6 +46,7 @@ class HugeDataSeeder extends Seeder
                 array_push($rows, [
                     'barcode_identifier' => fake()->ean13(),
                     'name' => fake()->unique()->sentence(3),
+                    'quantity' => fake()->randomNumber(3, false),
                     'category_id' => $category->id,
                     'vendor_id' => $vendor->id,
                     'user_id' => $user->id,

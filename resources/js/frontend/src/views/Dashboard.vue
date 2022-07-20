@@ -38,9 +38,9 @@
         </div>
         <div class="row mt-4">
           <div class="col-lg-4 col-md-6 mt-4">
-            <chart-holder-card title="Website Views" subtitle="Last Campaign Performance"
+            <chart-holder-card title="Transactions" subtitle=""
               :update="'updated ' + moment(transactionsData.lastUpdatedAt).fromNow()">
-              <reports-bar-chart :chart="{
+              <reports-bar-chart id="transactions-chart" :chart="{
                 labels: transactionsData.labels,
                 datasets: {
                   label: 'Transactions',
@@ -52,7 +52,7 @@
           <div class="col-lg-4 col-md-6 mt-4">
             <chart-holder-card title="Total Ins" subtitle=""
               :update="'updated ' + moment(insData.lastUpdatedAt).fromNow()" color="success">
-              <reports-line-chart :chart="{
+              <reports-line-chart id="total-ins-chart" :chart="{
                 labels: insData.labels,
                 datasets: {
                   label: 'INs',
@@ -64,11 +64,49 @@
           <div class="col-lg-4 mt-4">
             <chart-holder-card title="Total Outs" subtitle=""
               :update="'updated ' + moment(outsData.lastUpdatedAt).fromNow()" color="dark">
-              <reports-line-chart id="tasks-chart" :chart="{
+              <reports-line-chart id="total-outs-chart" :chart="{
                 labels: outsData.labels,
                 datasets: {
                   label: 'OUTs',
                   data: outsData.values,
+                },
+              }" />
+            </chart-holder-card>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-lg-4 col-md-6 mt-4">
+            <chart-holder-card title="Top Products" subtitle=""
+              :update="'updated ' + moment(productsData.lastUpdatedAt).fromNow()">
+              <reports-bar-chart id="products-chart" :chart="{
+                labels: productsData.labels,
+                datasets: {
+                  label: 'Products',
+                  data: productsData.values,
+                },
+              }" />
+            </chart-holder-card>
+          </div>
+          <div class="col-lg-4 mt-4">
+            <chart-holder-card title="Hot Products" subtitle=""
+              :update="'updated ' + moment(hotProductsData.lastUpdatedAt).fromNow()" color="dark">
+              <reports-polar-area-chart id="tasks-chart" :chart="{
+                labels: hotProductsData.labels,
+                datasets: {
+                  label: 'OUTs',
+                  data: hotProductsData.values,
+                },
+              }" />
+            </chart-holder-card>
+          </div>
+          <div class="col-lg-4 col-md-6 mt-4">
+            <chart-holder-card title="Most warehouse occupying products" subtitle=""
+              :update="'updated ' + moment(productsData.lastUpdatedAt).fromNow()" color="success">
+              <reports-doughnut-chart :chart="{
+                labels: productsData.labels,
+                datasets: {
+                  label: 'INs',
+                  data: productsData.values,
                 },
               }" />
             </chart-holder-card>
@@ -159,6 +197,9 @@
 import ChartHolderCard from "./components/ChartHolderCard.vue";
 import ReportsBarChart from "../examples/Charts/ReportsBarChart.vue";
 import ReportsLineChart from "../examples/Charts/ReportsLineChart.vue";
+import ReportsDoughnutChart from "../examples/Charts/ReportsDoughnutChart.vue";
+import ReportsPolarAreaChart from "../examples/Charts/ReportsPolarAreaChart.vue";
+
 import MiniStatisticsCard from "./components/MiniStatisticsCard.vue";
 import ProjectCard from "./components/ProjectCard.vue";
 import TimelineList from "../examples/Cards/TimelineList.vue";
@@ -191,6 +232,8 @@ export default {
       logoJira,
       logoInvision,
 
+      productsData: { labels: [], values: [], lastUpdatedAt: null },
+      hotProductsData: { labels: [], values: [], lastUpdatedAt: null },
       insData: { labels: [], values: [], lastUpdatedAt: null },
       outsData: { labels: [], values: [], lastUpdatedAt: null },
       transactionsData: { labels: [], values: [], lastUpdatedAt: null },
@@ -200,6 +243,9 @@ export default {
     ChartHolderCard,
     ReportsBarChart,
     ReportsLineChart,
+    ReportsDoughnutChart,
+    ReportsPolarAreaChart,
+
     MiniStatisticsCard,
     ProjectCard,
     TimelineList,
@@ -232,6 +278,24 @@ export default {
       this.outsData = {
         labels: data.map(i => moment(i.transaction_date).format('MMM D')),
         values: data.map(i => parseInt(i.s_quantity)),
+        lastUpdatedAt: moment()
+      };
+    })
+
+    axios.get('/api/charts/top-products').then(response => {
+      const data = response.data.top_products
+      this.productsData = {
+        labels: data.map(i => i.name.split(' ').map(a => a.substring(0, 1)).join('.').toUpperCase()),
+        values: data.map(i => i.quantity),
+        lastUpdatedAt: moment()
+      };
+    })
+
+    axios.get('/api/charts/hot-products').then(response => {
+      const data = response.data.hot_products
+      this.hotProductsData = {
+        labels: data.map(i => i.name.split(' ').map(a => a.substring(0, 1)).join('.').toUpperCase()),
+        values: data.map(i => i.c_all),
         lastUpdatedAt: moment()
       };
     })
