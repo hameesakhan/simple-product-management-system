@@ -4,6 +4,11 @@ export function SET_PRODUCTS(state, products) {
     state.products = products
 }
 
+export function SET_PRODUCTS_PAGINATION(state, paginate) {
+    state.products_total = paginate.total
+    state.products_per_page = paginate.per_page
+}
+
 export function SET_ACTIVE_PRODUCT(state, product) {
     state.activeProduct = product
 }
@@ -21,10 +26,11 @@ export function REMOVE_PRODUCT(state, id) {
     state.products = newList;
 }
 
-export async function fetchProducts({ commit }) {
+export async function fetchProducts({ commit }, page = 1) {
     try {
-        const response = await axios.get('/api/product')
-        commit('SET_PRODUCTS', response.data.products)
+        const response = await axios.get(`/api/product?page=${page}`)
+        commit('SET_PRODUCTS', response.data.products.data)
+        commit('SET_PRODUCTS_PAGINATION', { total: response.data.total, per_page: response.data.per_page })
     }
     catch (error) {
         alert(error)

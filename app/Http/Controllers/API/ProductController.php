@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -29,7 +29,11 @@ class ProductController extends Controller
             return ['product' => $product];
         }
 
-        return ['products' => Product::with(['user', 'vendor', 'category'])->get()];
+        return [
+            'products' => Product::with(['user', 'vendor', 'category'])->simplePaginate(50),
+            'total' => Product::count(),
+            'per_page' => 50,
+        ];
     }
 
     /**

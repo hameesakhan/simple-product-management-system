@@ -228,6 +228,7 @@
                 </tbody>
               </table>
             </div>
+            <pagination align="center" :data="paginationData" @pagination-change-page="list" />
           </div>
         </div>
       </div>
@@ -240,12 +241,14 @@ import MaterialButton from "../components/MaterialButton.vue";
 import MaterialModal from "../components/MaterialModal.vue";
 import moment from 'moment'
 import JsBarcode from 'jsbarcode'
+import Pagination from 'laravel-vue-pagination'
 
 export default {
   name: "Products",
   components: {
     MaterialButton,
     MaterialModal,
+    Pagination,
   },
   data: function () {
     return {
@@ -253,6 +256,13 @@ export default {
       activeProduct: null,
       product: {
         name: ''
+      },
+      paginationData: {
+        "total": 0,
+        'current_page': 1,
+        'per_page': 0,
+        'prev_page_url': null,
+        'next_page_url': null,
       }
     }
   },
@@ -273,6 +283,8 @@ export default {
     });
     this.$store.dispatch("fetchCategories");
     this.$store.dispatch("fetchVendors");
+
+    this.list(1);
   },
   methods: {
     moment,
@@ -296,6 +308,19 @@ export default {
     updateProduct() {
       this.$store.dispatch("updateProduct", this.activeProduct).then(() => {
         this.activeProduct = null;
+      });
+    },
+    list(page = 1) {
+      this.$store.dispatch("fetchProducts", page).then(() => {
+        const total = this.$store.state.products_total;
+        const perPage = this.$store.state.products_per_page;
+        this.paginationData = {
+          "total": total,
+          'current_page': page,
+          'per_page': perPage,
+          'prev_page_url': page == 1 ? null : (page - 1),
+          'next_page_url': page == (total / perPage) ? null : page + 1,
+        };
       });
     }
   }

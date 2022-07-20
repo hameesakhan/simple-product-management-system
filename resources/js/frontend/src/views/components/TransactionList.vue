@@ -267,8 +267,8 @@ export default {
           "total": total,
           'current_page': page,
           'per_page': perPage,
-          'prev_page_url': page == 1 ? null : '/api/transaction?page=' + (page - 1),
-          'next_page_url': page == (total / perPage) ? null : '/api/transaction?page=' + page + 1,
+          'prev_page_url': page == 1 ? null : (page - 1),
+          'next_page_url': page == (total / perPage) ? null : page + 1,
         };
       });
     }
