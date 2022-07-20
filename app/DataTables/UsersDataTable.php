@@ -22,7 +22,9 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'users.action')
-            ->setRowId('id');
+            ->setRowId('id')
+            ->searchPane('name', $query->clone()->selectRaw('name as label, COUNT(*) as total, name as value, COUNT(name) AS count')->groupBy('name')->get())
+            ->searchPane('email', $query->clone()->selectRaw('email as label, COUNT(*) as total, email as value, COUNT(email) AS count')->groupBy('email')->get());
     }
 
     /**

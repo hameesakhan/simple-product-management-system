@@ -18,17 +18,25 @@
 <script>
 import DataTable from 'datatables.net-vue3';
 import DataTableBs5 from 'datatables.net-bs5';
+import Responsive from 'datatables.net-responsive-bs5';
 
 import Buttons from 'datatables.net-buttons-bs5';
-import ButtonsColVis from 'datatables.net-buttons/js/buttons.colVis.js';
-import ButtonsHTML5 from 'datatables.net-buttons/js/buttons.html5.js';
-import Responsive from 'datatables.net-responsive-bs5';
+import ButtonsPrint from 'datatables.net-buttons/js/buttons.print';
+import ButtonsColVis from 'datatables.net-buttons/js/buttons.colVis';
+import ButtonsHTML5 from 'datatables.net-buttons/js/buttons.html5';
+
 import SearchPanes from 'datatables.net-searchpanes-bs5';
 import Select from 'datatables.net-select-bs5';
 
 
 DataTable.use(DataTableBs5);
-// DataTable.use(ButtonsHTML5);
+DataTable.use(Responsive);
+
+DataTable.use(Buttons);
+DataTable.use(ButtonsPrint);
+DataTable.use(ButtonsHTML5);
+DataTable.use(ButtonsColVis);
+
 DataTable.use(SearchPanes);
 DataTable.use(Select);
 
@@ -45,8 +53,28 @@ export default {
     computed: {
         tableOptions() {
             return {
+                buttons: [
+                    'copy', 'csvHtml5', 'print', 'colvis', 'searchPanes',
+                    {
+                        text: 'Create',
+                        action: function (e, dt, node, config) {
+                            alert('Button activated');
+                        }
+                    }
+                ],
                 select: true,
-                'serverSide': true, 'processing': true, 'ajax': {
+                searchPanes: {
+                    'serverSide': true,
+                },
+                columnDefs: [{
+                    searchPanes: {
+                        show: true,
+                    },
+                    targets: [1, 2],
+                }],
+                'serverSide': true,
+                'processing': true,
+                'ajax': {
                     'url': '/api\/user',
                     'type': 'GET',
                     'data': function (data) {
@@ -58,16 +86,8 @@ export default {
                         }
                         delete data.search.regex;
                     },
-                    'create': function (data) {
-                        for (var i = 0, len = data.columns.length; i < len; i++) {
-                            if (!data.columns[i].search.value) delete data.columns[i].search;
-                            if (data.columns[i].searchable === true) delete data.columns[i].searchable;
-                            if (data.columns[i].orderable === true) delete data.columns[i].orderable;
-                            if (data.columns[i].data === data.columns[i].name) delete data.columns[i].name;
-                        }
-                        delete data.search.regex;
-                    }
-                }, 'columns': [
+                },
+                'columns': [
                     { 'data': 'action', 'name': 'action', 'title': 'Action', 'orderable': false, 'searchable': false, 'width': 60, 'className': 'text-center' },
                     { 'data': 'created_at', 'name': 'created_at', 'title': 'Created At', 'orderable': true, 'searchable': true },
                     { 'data': 'email', 'name': 'email', 'title': 'Email', 'orderable': true, 'searchable': true },
@@ -78,13 +98,7 @@ export default {
                 ],
                 'dom': 'Bfrtip',
                 'order': [[1, 'desc']],
-                'buttons': [
-                    { 'extend': 'create' },
-                    { 'extend': 'export' },
-                    { 'extend': 'print' },
-                    { 'extend': 'reset' },
-                    { 'extend': 'reload' }
-                ]
+
             };
         }
     },

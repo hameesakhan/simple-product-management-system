@@ -5,10 +5,10 @@
 @import 'variables';
 
 // Bootstrap
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'bootstrap';
 
 // DataTables
-@import 'node_modules/datatables.net-bs4/css/dataTables.bootstrap4';
-@import 'node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4';
-@import 'node_modules/datatables.net-select-bs4/css/select.bootstrap4';
-@import 'node_modules/datatables.net-searchpanes-bs4/css/searchPanes.bootstrap4';
+@import 'datatables.net-bs5';
+@import 'datatables.net-select-bs5';
+@import "datatables.net-buttons-bs5";
+@import "datatables.net-searchpanes-bs5";
