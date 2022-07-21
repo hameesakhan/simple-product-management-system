@@ -21,7 +21,7 @@ class RoleSeeder extends Seeder
         $roleUser = Role::create(['guard_name' => 'sanctum', 'name' => 'User']);
 
         // viewAny, view, create, update, delete
-        foreach (['Product', 'Vendor', 'Category', 'Receiving', 'Dispatch'] as $m) {
+        foreach (['Product', 'Vendor', 'Category', 'Receiving', 'Dispatch', 'User'] as $m) {
             foreach (['viewAny', 'view', 'create', 'update', 'delete'] as $p) {
                 $permission = Permission::create(['guard_name' => 'sanctum', 'name' => $p . ' ' . strtolower($m)]);
                 $roleAdmin->givePermissionTo($permission);

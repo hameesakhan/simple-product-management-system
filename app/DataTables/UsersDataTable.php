@@ -35,7 +35,8 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery();
+        // $model->load('roles');
+        return $model->with('roles')->newQuery();
     }
 
     /**
@@ -75,6 +76,7 @@ class UsersDataTable extends DataTable
                 ->addClass('text-center'),
             Column::make('created_at'),
             Column::make('email'),
+            Column::make('roles'),
             Column::make('email_verified_at'),
             Column::make('id'),
             Column::make('name'),

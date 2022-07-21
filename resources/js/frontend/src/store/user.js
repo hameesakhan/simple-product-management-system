@@ -9,7 +9,7 @@ export function SET_ACTIVE_USER(state, user) {
 }
 
 export function ADD_USER(state, user) {
-    state.users = [...state.users, user]
+    // state.users = [...state.users, user]
 }
 
 export function CHANGE_USER(state, user) {

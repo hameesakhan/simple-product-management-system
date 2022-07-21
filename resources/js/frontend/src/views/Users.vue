@@ -2,12 +2,14 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
-                <DataTable class="display w-100" :columns="[
+                <DataTable ref="usersDataTableRef" id="usersDataTable" class="display w-100" :columns="[
                     { data: 'id', title: 'ID', },
                     { data: 'name', title: 'Name', },
                     { data: 'email', title: 'Email', },
+                    { data: 'roles[,].name', title: 'Roles', },
                     { data: 'created_at', title: 'Created At', },
                     { data: 'updated_at', title: 'Updated At', },
+                    { data: 'actions', title: 'Actions', },
                 
                 ]" :options="tableOptions" />
             </div>
@@ -27,7 +29,6 @@ import ButtonsHTML5 from 'datatables.net-buttons/js/buttons.html5';
 
 import SearchPanes from 'datatables.net-searchpanes-bs5';
 import Select from 'datatables.net-select-bs5';
-
 
 DataTable.use(DataTableBs5);
 DataTable.use(Responsive);
@@ -51,6 +52,9 @@ export default {
         }
     },
     computed: {
+        roles() {
+            return this.$store.state.roles;
+        },
         tableOptions() {
             return {
                 buttons: [
@@ -59,24 +63,32 @@ export default {
                         text: 'Create',
                         action: (e, dt, node, config) => {
                             this.$swal.fire({
-                                title: 'Login Form',
-                                html: `<input type="text" id="login" class="swal2-input" placeholder="Username">
-  <input type="password" id="password" class="swal2-input" placeholder="Password">`,
-                                confirmButtonText: 'Sign in',
+                                title: 'Create User',
+                                html: `
+                                    <input type="text" id="name" class="swal2-input" placeholder="Name">
+                                    <input type="text" id="email" class="swal2-input" placeholder="Email">
+                                    <input type="password" id="password" class="swal2-input" placeholder="Password">
+                                    <select id="role" class="swal2-input">
+                                        ${this.$store.state.roles.map(role => `<option value="${role.name}">${role.name}</option>`).join("\n")
+                                    }
+                                    </select>
+                                    `,
+                                confirmButtonText: 'Create',
                                 focusConfirm: false,
                                 preConfirm: () => {
-                                    const login = this.$swal.getPopup().querySelector('#login').value
+                                    const name = this.$swal.getPopup().querySelector('#name').value
+                                    const email = this.$swal.getPopup().querySelector('#email').value
                                     const password = this.$swal.getPopup().querySelector('#password').value
-                                    if (!login || !password) {
-                                        this.$swal.showValidationMessage(`Please enter login and password`)
+                                    const role = this.$swal.getPopup().querySelector('#role').value
+                                    if (!name || !email || !password || !role) {
+                                        this.$swal.showValidationMessage(`All fields are mandatory`)
                                     }
-                                    return { login: login, password: password }
+                                    return { name, email, password, role }
                                 }
                             }).then((result) => {
-                                this.$swal.fire(`
-    Login: ${result.value.login}
-    Password: ${result.value.password}
-  `.trim())
+                                this.$store.dispatch('createUser', result.value).then(() => {
+                                    
+                                })
                             })
                         }
                     }
@@ -129,6 +141,7 @@ export default {
         }
     },
     mounted() {
+        this.$store.dispatch('fetchRoles');
     },
     methods: {
     }
