@@ -16,7 +16,7 @@ import { SET_USERS, SET_ACTIVE_USER, ADD_USER, CHANGE_USER, REMOVE_USER } from '
 import { fetchUsers, fetchUser, createUser, updateUser, deleteUser } from './user'
 
 import { SET_ROLES, SET_ACTIVE_ROLE, ADD_ROLE, CHANGE_ROLE, REMOVE_ROLE } from './role'
-import { fetchRoles, fetchRole, createRole, updateRole, deleteRole } from './role'
+import { fetchRoles, fetchRole, createRole, updateRole, updatePermissionsOfRole, deleteRole } from './role'
 
 import { SET_PERMISSIONS, SET_ACTIVE_PERMISSION, ADD_PERMISSION, CHANGE_PERMISSION, REMOVE_PERMISSION } from './permission'
 import { fetchPermissions, fetchPermission, createPermission, updatePermission, deletePermission } from './permission'
@@ -117,7 +117,7 @@ export default createStore({
     fetchUsers, fetchUser, createUser, updateUser, deleteUser,
 
     // Roles
-    fetchRoles, fetchRole, createRole, updateRole, deleteRole,
+    fetchRoles, fetchRole, createRole, updateRole, updatePermissionsOfRole, deleteRole,
 
     // Permissions
     fetchPermissions, fetchPermission, createPermission, updatePermission, deletePermission,

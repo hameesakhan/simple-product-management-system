@@ -10,7 +10,7 @@
           </div>
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0">
-              <table class="table align-items-center mb-0">
+              <table class="table table-hover align-items-center mb-0">
                 <thead>
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -29,7 +29,8 @@
                     </td>
                     <td v-for="role in roles" class="align-middle text-center">
                       <input type="checkbox" class=""
-                        :checked="!!(role.permissions.find(p => p.name == permission.name))">
+                        :checked="!!(role.permissions.find(p => p.name == permission.name))"
+                        @input="event => changePermission(role.id, permission.name, event.target.checked)">
                     </td>
                   </tr>
                 </tbody>
@@ -55,6 +56,17 @@ export default {
       const result = text.replace(/([A-Z])/g, " $1");
       const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
       return finalResult
+    },
+    changePermission(roleId, permissionName, value) {
+      let currentPermissions = this.$store.state.roles.find(r => r.id == roleId).permissions.map(p => p.name)
+
+      if (value) {
+        currentPermissions.push(permissionName);
+      } else {
+        currentPermissions = currentPermissions.filter(cP => cP !== permissionName);
+      }
+
+      this.$store.dispatch("updatePermissionsOfRole", { roleId, permissions: currentPermissions });
     }
   },
   computed: {

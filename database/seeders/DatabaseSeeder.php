@@ -25,15 +25,31 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->syncRoles(['Super Admin']);
 
-        $category = \App\Models\Category::factory()->create([
-            'name' => 'Test Category',
+        \App\Models\Category::factory(1000)->create([
             'user_id' => $user->id,
         ]);
 
-        $vendor = \App\Models\Vendor::factory()->create([
-            'name' => 'Test Vendor',
+        \App\Models\Vendor::factory(1000)->create([
             'user_id' => $user->id,
         ]);
+
+        $totalRowstoInsert = 5000;
+        $rowsInSingleTransaction = 5000;
+        for ($i = 0; $i < ($totalRowstoInsert / $rowsInSingleTransaction); $i++) {
+            $rows = [];
+            for ($j = 0; $j < $rowsInSingleTransaction; $j++) {
+                array_push($rows, [
+                    'barcode_identifier' => fake()->ean13(),
+                    'name' => fake()->unique()->sentence(3),
+                    'quantity' => fake()->randomNumber(3, false),
+                    'category_id' => fake()->randomNumber(3, false),
+                    'vendor_id' => fake()->randomNumber(3, false),
+                    'user_id' => $user->id,
+                ]);
+            }
+            \App\Models\Product::insert($rows);
+            $rows = [];
+        }
 
     }
 }

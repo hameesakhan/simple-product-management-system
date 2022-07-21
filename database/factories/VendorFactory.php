@@ -18,7 +18,7 @@ class VendorFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->unique()->sentence(3),
         ];
     }
 }

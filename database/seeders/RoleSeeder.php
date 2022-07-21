@@ -15,15 +15,15 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $role = Role::create(['name' => 'Super Admin']);
+        $role = Role::create(['guard_name' => 'sanctum', 'name' => 'Super Admin']);
 
-        $roleAdmin = Role::create(['name' => 'Admin']);
-        $roleUser = Role::create(['name' => 'User']);
+        $roleAdmin = Role::create(['guard_name' => 'sanctum', 'name' => 'Admin']);
+        $roleUser = Role::create(['guard_name' => 'sanctum', 'name' => 'User']);
 
         // viewAny, view, create, update, delete
         foreach (['Product', 'Vendor', 'Category', 'Receiving', 'Dispatch'] as $m) {
             foreach (['viewAny', 'view', 'create', 'update', 'delete'] as $p) {
-                $permission = Permission::create(['name' => $p . ' ' . strtolower($m)]);
+                $permission = Permission::create(['guard_name' => 'sanctum', 'name' => $p . ' ' . strtolower($m)]);
                 $roleAdmin->givePermissionTo($permission);
                 $roleUser->givePermissionTo($permission);
             }
@@ -31,7 +31,7 @@ class RoleSeeder extends Seeder
 
         foreach (['Role'] as $m) {
             foreach (['viewAny', 'view', 'create', 'update'] as $p) {
-                $permission = Permission::create(['name' => $p . ' ' . strtolower($m)]);
+                $permission = Permission::create(['guard_name' => 'sanctum', 'name' => $p . ' ' . strtolower($m)]);
                 $roleAdmin->givePermissionTo($permission);
                 $roleUser->givePermissionTo($permission);
             }
@@ -39,7 +39,7 @@ class RoleSeeder extends Seeder
 
         foreach (['Permission'] as $m) {
             foreach (['create', 'delete'] as $p) {
-                $permission = Permission::create(['name' => $p . ' ' . strtolower($m)]);
+                $permission = Permission::create(['guard_name' => 'sanctum', 'name' => $p . ' ' . strtolower($m)]);
                 $roleAdmin->givePermissionTo($permission);
                 $roleUser->givePermissionTo($permission);
             }

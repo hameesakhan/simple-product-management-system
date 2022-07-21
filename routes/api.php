@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('transaction', App\Http\Controllers\API\TransactionController::class);
     Route::apiResource('vendor', App\Http\Controllers\API\VendorController::class);
     Route::apiResource('role', App\Http\Controllers\API\RoleController::class);
+    Route::put('role/{role}/permissions', [App\Http\Controllers\API\RoleController::class, 'updatePermissions']);
     Route::apiResource('permission', App\Http\Controllers\API\PermissionController::class);
 
     // Route::get('user', function(){
@@ -32,10 +33,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('ins', [App\Http\Controllers\API\ChartController::class, 'ins']);
         Route::get('outs', [App\Http\Controllers\API\ChartController::class, 'outs']);
         Route::get('transactions', [App\Http\Controllers\API\ChartController::class, 'transactions']);
-        
+
         Route::get('top-products', [App\Http\Controllers\API\ChartController::class, 'topProducts']);
         Route::get('hot-products', [App\Http\Controllers\API\ChartController::class, 'hotProducts']);
-        
+
         Route::get('insnouts', [App\Http\Controllers\API\ChartController::class, 'insnouts']);
     });
 });

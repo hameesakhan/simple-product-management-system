@@ -75,3 +75,14 @@ export async function deleteRole({ commit }, { id }) {
         console.log(error)
     }
 }
+
+export async function updatePermissionsOfRole({ commit }, { roleId, permissions }) {
+    try {
+        const response = await axios.put('/api/role/' + roleId + '/permissions', { permissions: permissions })
+        commit('CHANGE_ROLE', response.data.role)
+    }
+    catch (error) {
+        alert(error)
+        console.log(error)
+    }
+}

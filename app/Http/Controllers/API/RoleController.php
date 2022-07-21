@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
-use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -84,5 +84,20 @@ class RoleController extends Controller
         $this->authorize('delete', $role);
 
         return ['success' => $role->delete()];
+    }
+
+    public function updatePermissions(Role $role, \Illuminate\Http\Request $request)
+    {
+        $this->authorize('update', Permission::class);
+        $this->authorize('delete', Permission::class);
+
+        $this->validate($request, [
+            'permissions' => 'required|array',
+        ]);
+
+        $role->syncPermissions(array_intersect($request->permissions, Permission::all()->pluck('name')->toArray()));
+        $role->load('permissions');
+
+        return ['role' => $role];
     }
 }
