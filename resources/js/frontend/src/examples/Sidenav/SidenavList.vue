@@ -61,7 +61,7 @@
           </template>
         </sidenav-collapse>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <sidenav-collapse url="#" :aria-controls="''" v-bind:collapse="false" collapseRef="tables" navText="Tables">
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">table_view</i>
@@ -117,14 +117,14 @@
             <i class="material-icons-round opacity-10 fs-5">assignment</i>
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
     </ul>
-    <div class="sidenav-footer position-absolute w-100 bottom-0">
+    <!-- <div class="sidenav-footer position-absolute w-100 bottom-0">
       <div class="mx-3">
         <a class="btn mt-4 w-100" :class="`bg-gradient-${this.$store.state.color}`"
           href="https://www.creative-tim.com/product/vue-material-dashboard-2-pro">Upgrade to pro</a>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
