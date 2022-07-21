@@ -2,6 +2,17 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
+                <material-alert v-if="error.data" class="font-weight-light" color="danger" dismissible>
+                    <p class="mb-0">{{ error.data.message }}</p>
+                    <ul>
+                        <li v-for="a in error.data.errors">
+                            <ul>
+                                <li v-for="b in a">{{ b }}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </material-alert>
+
                 <DataTable ref="usersDataTableRef" id="usersDataTable" class="display w-100" :columns="[
                     { data: 'id', title: 'ID', },
                     { data: 'name', title: 'Name', },
@@ -18,6 +29,8 @@
 </template>
 
 <script>
+import MaterialAlert from "../components/MaterialAlert.vue";
+
 import DataTable from 'datatables.net-vue3';
 import DataTableBs5 from 'datatables.net-bs5';
 import Responsive from 'datatables.net-responsive-bs5';
@@ -44,7 +57,8 @@ DataTable.use(Select);
 export default {
     name: "Users",
     components: {
-        DataTable
+        DataTable,
+        MaterialAlert,
     },
     data: function () {
         return {
@@ -52,6 +66,9 @@ export default {
         }
     },
     computed: {
+        error() {
+            return this.$store.state.error
+        },
         roles() {
             return this.$store.state.roles;
         },

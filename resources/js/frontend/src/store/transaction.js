@@ -33,7 +33,7 @@ export async function fetchTransactions({ commit }, page = 1) {
         commit('SET_TRANSACTIONS_PAGINATION', { total: response.data.total, per_page: response.data.per_page })
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -44,7 +44,7 @@ export async function fetchTransaction({ commit }, { id }) {
         commit('SET_ACTIVE_TRANSACTION', response.data.transaction)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -55,7 +55,7 @@ export async function createTransaction({ commit }, transaction) {
         commit('ADD_TRANSACTION', response.data.transaction)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -66,7 +66,7 @@ export async function updateTransaction({ commit }, transaction) {
         commit('CHANGE_TRANSACTION', response.data.transaction)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -77,7 +77,7 @@ export async function deleteTransaction({ commit }, { id }) {
         commit('REMOVE_TRANSACTION', id)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }

@@ -27,7 +27,7 @@ export async function fetchCategories({ commit }) {
         commit('SET_CATEGORIES', response.data.categories)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -38,7 +38,7 @@ export async function fetchCategory({ commit }, { id }) {
         commit('SET_ACTIVE_CATEGORY', response.data.category)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -49,7 +49,7 @@ export async function createCategory({ commit }, category) {
         commit('ADD_CATEGORY', response.data.category)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -60,7 +60,7 @@ export async function updateCategory({ commit }, category) {
         commit('CHANGE_CATEGORY', response.data.category)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -71,7 +71,7 @@ export async function deleteCategory({ commit }, { id }) {
         commit('REMOVE_CATEGORY', id)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }

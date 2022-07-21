@@ -27,7 +27,7 @@ export async function fetchVendors({ commit }) {
         commit('SET_VENDORS', response.data.vendors)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -38,7 +38,7 @@ export async function fetchVendor({ commit }, { id }) {
         commit('SET_ACTIVE_VENDOR', response.data.vendor)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -49,7 +49,7 @@ export async function createVendor({ commit }, vendor) {
         commit('ADD_VENDOR', response.data.vendor)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -60,7 +60,7 @@ export async function updateVendor({ commit }, vendor) {
         commit('CHANGE_VENDOR', response.data.vendor)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -71,7 +71,7 @@ export async function deleteVendor({ commit }, { id }) {
         commit('REMOVE_VENDOR', id)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }

@@ -27,7 +27,7 @@ export async function fetchUsers({ commit }) {
         commit('SET_USERS', response.data.users)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -38,7 +38,7 @@ export async function fetchUser({ commit }, { id }) {
         commit('SET_ACTIVE_USER', response.data.user)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -49,7 +49,7 @@ export async function createUser({ commit }, user) {
         commit('ADD_USER', response.data.user)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -60,7 +60,7 @@ export async function updateUser({ commit }, user) {
         commit('CHANGE_USER', response.data.user)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -71,7 +71,7 @@ export async function deleteUser({ commit }, { id }) {
         commit('REMOVE_USER', id)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }

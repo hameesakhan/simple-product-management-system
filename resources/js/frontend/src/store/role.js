@@ -27,7 +27,7 @@ export async function fetchRoles({ commit }) {
         commit('SET_ROLES', response.data.roles)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -38,7 +38,7 @@ export async function fetchRole({ commit }, { id }) {
         commit('SET_ACTIVE_ROLE', response.data.role)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -49,7 +49,7 @@ export async function createRole({ commit }, role) {
         commit('ADD_ROLE', response.data.role)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -60,7 +60,7 @@ export async function updateRole({ commit }, role) {
         commit('CHANGE_ROLE', response.data.role)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -71,7 +71,7 @@ export async function deleteRole({ commit }, { id }) {
         commit('REMOVE_ROLE', id)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -82,7 +82,7 @@ export async function updatePermissionsOfRole({ commit }, { roleId, permissions 
         commit('CHANGE_ROLE', response.data.role)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }

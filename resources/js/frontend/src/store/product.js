@@ -33,7 +33,7 @@ export async function fetchProducts({ commit }, page = 1) {
         commit('SET_PRODUCTS_PAGINATION', { total: response.data.total, per_page: response.data.per_page })
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -44,7 +44,7 @@ export async function fetchProduct({ commit }, { id }) {
         commit('SET_ACTIVE_PRODUCT', response.data.product)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -55,7 +55,7 @@ export async function createProduct({ commit }, product) {
         commit('ADD_PRODUCT', response.data.product)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -66,7 +66,7 @@ export async function updateProduct({ commit }, product) {
         commit('CHANGE_PRODUCT', response.data.product)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -77,7 +77,7 @@ export async function deleteProduct({ commit }, { id }) {
         commit('REMOVE_PRODUCT', id)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }

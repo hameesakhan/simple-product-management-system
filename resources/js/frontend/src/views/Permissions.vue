@@ -9,6 +9,17 @@
             </div>
           </div>
           <div class="card-body px-0 pb-2">
+            <material-alert v-if="error.data" class="font-weight-light" color="danger" dismissible>
+              <p class="mb-0">{{ error.data.message }}</p>
+              <ul>
+                <li v-for="a in error.data.errors">
+                  <ul>
+                    <li v-for="b in a">{{ b }}</li>
+                  </ul>
+                </li>
+              </ul>
+            </material-alert>
+
             <div class="table-responsive p-0">
               <table class="table table-hover align-items-center mb-0">
                 <thead>
@@ -44,9 +55,13 @@
 </template>
 
 <script>
+import MaterialAlert from "../components/MaterialAlert.vue";
 
 export default {
   name: "permissions",
+  components: {
+    MaterialAlert,
+  },
   mounted() {
     this.$store.dispatch("fetchRoles");
     this.$store.dispatch("fetchPermissions");
@@ -70,6 +85,9 @@ export default {
     }
   },
   computed: {
+    error() {
+      return this.$store.state.error
+    },
     roles() {
       return this.$store.state.roles;
     },

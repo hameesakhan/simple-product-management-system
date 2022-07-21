@@ -48,8 +48,18 @@ export default createStore({
     transactions: [],
     users: [],
     vendors: [],
+    roles: [],
+    permissions: [],
+
+    error: {
+      title: null,
+      data: null
+    }
   },
   mutations: {
+    setError(state, { title, data }) {
+      state.error = { title, data };
+    },
     toggleConfigurator(state) {
       state.showConfig = !state.showConfig;
     },

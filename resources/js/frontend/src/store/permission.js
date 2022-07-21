@@ -27,7 +27,7 @@ export async function fetchPermissions({ commit }) {
         commit('SET_PERMISSIONS', response.data.permissions)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -38,7 +38,7 @@ export async function fetchPermission({ commit }, { id }) {
         commit('SET_ACTIVE_PERMISSION', response.data.permission)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -49,7 +49,7 @@ export async function createPermission({ commit }, permission) {
         commit('ADD_PERMISSION', response.data.permission)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -60,7 +60,7 @@ export async function updatePermission({ commit }, permission) {
         commit('CHANGE_PERMISSION', response.data.permission)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
@@ -71,7 +71,7 @@ export async function deletePermission({ commit }, { id }) {
         commit('REMOVE_PERMISSION', id)
     }
     catch (error) {
-        alert(error)
+        commit('setError', { title: error.response.statusText, data: error.response.data })
         console.log(error)
     }
 }
