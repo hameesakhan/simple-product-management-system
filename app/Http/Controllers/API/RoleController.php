@@ -88,7 +88,7 @@ class RoleController extends Controller
 
     public function updatePermissions(Role $role, \Illuminate\Http\Request $request)
     {
-        $this->authorize('update', Permission::class);
+        $this->authorize('create', Permission::class);
         $this->authorize('delete', Permission::class);
 
         $this->validate($request, [

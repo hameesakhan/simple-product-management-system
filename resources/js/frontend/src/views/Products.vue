@@ -128,7 +128,7 @@
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div>
-                          <svg class="barcode avatar me-3 border-radius-lg" alt="user6" jsbarcode-format="auto"
+                          <svg class="barcode border-radius-lg" alt="user6" jsbarcode-format="auto"
                             :jsbarcode-value="product.barcode_identifier" jsbarcode-textmargin="0"
                             jsbarcode-fontoptions="bold">
                           </svg>

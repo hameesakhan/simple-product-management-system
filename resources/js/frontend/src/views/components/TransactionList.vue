@@ -15,7 +15,9 @@
               Barcode Identifier:
               <input type="number" v-model="transaction.product.barcode_identifier" class="form-control"
                 v-on:dblclick="initQuagga()" v-on:blur="stopQuagga()" v-on:keyup.enter="searchProduct()" />
-              <div id="cameraPreview" style="display: none;"></div>
+              <div id="cameraPreview"
+              
+              ></div>
             </span>
             <span class="mb-2 text-xs">
               Product Name:
@@ -156,7 +158,7 @@ export default {
         .catch((err) => {
           if (err.response) {
             // handle err
-            this.transaction.product.barcode_identifier = '';
+            // this.transaction.product.barcode_identifier = '';
             console.log(err);
             this.$swal(err.response.statusText, err.response.data.message, 'err');
           }
