@@ -15,6 +15,12 @@ import { fetchTransactions, fetchTransaction, createTransaction, updateTransacti
 import { SET_USERS, SET_ACTIVE_USER, ADD_USER, CHANGE_USER, REMOVE_USER } from './user'
 import { fetchUsers, fetchUser, createUser, updateUser, deleteUser } from './user'
 
+import { SET_ROLES, SET_ACTIVE_ROLE, ADD_ROLE, CHANGE_ROLE, REMOVE_ROLE } from './role'
+import { fetchRoles, fetchRole, createRole, updateRole, deleteRole } from './role'
+
+import { SET_PERMISSIONS, SET_ACTIVE_PERMISSION, ADD_PERMISSION, CHANGE_PERMISSION, REMOVE_PERMISSION } from './permission'
+import { fetchPermissions, fetchPermission, createPermission, updatePermission, deletePermission } from './permission'
+
 export default createStore({
   state: {
     hideConfigButton: false,
@@ -83,6 +89,12 @@ export default createStore({
 
     // Users
     SET_USERS, SET_ACTIVE_USER, ADD_USER, CHANGE_USER, REMOVE_USER,
+
+    // Roles
+    SET_ROLES, SET_ACTIVE_ROLE, ADD_ROLE, CHANGE_ROLE, REMOVE_ROLE,
+
+    // Permissions
+    SET_PERMISSIONS, SET_ACTIVE_PERMISSION, ADD_PERMISSION, CHANGE_PERMISSION, REMOVE_PERMISSION,
   },
   actions: {
     setColor({ commit }, payload) {
@@ -102,7 +114,13 @@ export default createStore({
     fetchTransactions, fetchTransaction, createTransaction, updateTransaction, deleteTransaction,
 
     // Users
-    fetchUsers, fetchUser, createUser, updateUser, deleteUser
+    fetchUsers, fetchUser, createUser, updateUser, deleteUser,
+
+    // Roles
+    fetchRoles, fetchRole, createRole, updateRole, deleteRole,
+
+    // Permissions
+    fetchPermissions, fetchPermission, createPermission, updatePermission, deletePermission,
   },
   getters: {},
 });

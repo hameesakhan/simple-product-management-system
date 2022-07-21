@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('transactions/:id/edit', 'home');
 
     Route::view('users', 'home');
+    Route::view('roles', 'home');
+    Route::view('permissions', 'home');
 // Route::get('users', [App\Http\Controllers\API\UserController::class, 'index']);
 
 // Route::view('dispatches', 'home');

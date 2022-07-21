@@ -57,8 +57,27 @@ export default {
                     'copy', 'csvHtml5', 'print', 'colvis', 'searchPanes',
                     {
                         text: 'Create',
-                        action: function (e, dt, node, config) {
-                            alert('Button activated');
+                        action: (e, dt, node, config) => {
+                            this.$swal.fire({
+                                title: 'Login Form',
+                                html: `<input type="text" id="login" class="swal2-input" placeholder="Username">
+  <input type="password" id="password" class="swal2-input" placeholder="Password">`,
+                                confirmButtonText: 'Sign in',
+                                focusConfirm: false,
+                                preConfirm: () => {
+                                    const login = this.$swal.getPopup().querySelector('#login').value
+                                    const password = this.$swal.getPopup().querySelector('#password').value
+                                    if (!login || !password) {
+                                        this.$swal.showValidationMessage(`Please enter login and password`)
+                                    }
+                                    return { login: login, password: password }
+                                }
+                            }).then((result) => {
+                                this.$swal.fire(`
+    Login: ${result.value.login}
+    Password: ${result.value.password}
+  `.trim())
+                            })
                         }
                     }
                 ],
@@ -66,26 +85,33 @@ export default {
                 searchPanes: {
                     'serverSide': true,
                 },
-                columnDefs: [{
-                    searchPanes: {
-                        show: true,
+                columnDefs: [
+                    {
+                        searchPanes: {
+                            show: true,
+                        },
+                        targets: [1, 2],
                     },
-                    targets: [1, 2],
-                }],
+                    {
+                        targets: [-1],
+                        data: null,
+                        defaultContent: '<button>Click!</button>',
+                    }
+                ],
                 'serverSide': true,
                 'processing': true,
                 'ajax': {
                     'url': '/api\/user',
                     'type': 'GET',
-                    'data': function (data) {
-                        for (var i = 0, len = data.columns.length; i < len; i++) {
-                            if (!data.columns[i].search.value) delete data.columns[i].search;
-                            if (data.columns[i].searchable === true) delete data.columns[i].searchable;
-                            if (data.columns[i].orderable === true) delete data.columns[i].orderable;
-                            if (data.columns[i].data === data.columns[i].name) delete data.columns[i].name;
-                        }
-                        delete data.search.regex;
-                    },
+                    // 'data': function (data) {
+                    //     for (var i = 0, len = data.columns.length; i < len; i++) {
+                    //         if (!data.columns[i].search.value) delete data.columns[i].search;
+                    //         if (data.columns[i].searchable === true) delete data.columns[i].searchable;
+                    //         if (data.columns[i].orderable === true) delete data.columns[i].orderable;
+                    //         if (data.columns[i].data === data.columns[i].name) delete data.columns[i].name;
+                    //     }
+                    //     delete data.search.regex;
+                    // },
                 },
                 'columns': [
                     { 'data': 'action', 'name': 'action', 'title': 'Action', 'orderable': false, 'searchable': false, 'width': 60, 'className': 'text-center' },
@@ -94,7 +120,7 @@ export default {
                     { 'data': 'email_verified_at', 'name': 'email_verified_at', 'title': 'Email Verified At', 'orderable': true, 'searchable': true },
                     { 'data': 'id', 'name': 'id', 'title': 'Id', 'orderable': true, 'searchable': true },
                     { 'data': 'name', 'name': 'name', 'title': 'Name', 'orderable': true, 'searchable': true },
-                    { 'data': 'updated_at', 'name': 'updated_at', 'title': 'Updated At', 'orderable': true, 'searchable': true }
+                    { 'data': 'updated_at', 'name': 'updated_at', 'title': 'Updated At', 'orderable': true, 'searchable': true },
                 ],
                 'dom': 'Bfrtip',
                 'order': [[1, 'desc']],

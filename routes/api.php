@@ -20,6 +20,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('receiving', App\Http\Controllers\API\ReceivingController::class);
     Route::apiResource('transaction', App\Http\Controllers\API\TransactionController::class);
     Route::apiResource('vendor', App\Http\Controllers\API\VendorController::class);
+    Route::apiResource('role', App\Http\Controllers\API\RoleController::class);
+    Route::apiResource('permission', App\Http\Controllers\API\PermissionController::class);
 
     // Route::get('user', function(){
     //     return ['users' => \App\Models\User::all()];
