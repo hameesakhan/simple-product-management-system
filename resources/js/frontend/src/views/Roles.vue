@@ -109,7 +109,7 @@
 
                       <material-button color="dark" variant="gradient" @click="updateRole()"
                         v-if="role.id === activeRole?.id">
-                        <i class="fas fa-floppy-o me-2"></i>
+                        <i class="fas fa-save-o me-2"></i>
                         Save
                       </material-button>
 

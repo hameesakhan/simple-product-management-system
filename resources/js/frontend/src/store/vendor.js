@@ -25,6 +25,7 @@ export async function fetchVendors({ commit }) {
     try {
         const response = await axios.get('/api/vendor')
         commit('SET_VENDORS', response.data.vendors)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -36,6 +37,7 @@ export async function fetchVendor({ commit }, { id }) {
     try {
         const response = await axios.get('/api/vendor/' + id)
         commit('SET_ACTIVE_VENDOR', response.data.vendor)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -47,6 +49,7 @@ export async function createVendor({ commit }, vendor) {
     try {
         const response = await axios.post('/api/vendor', vendor)
         commit('ADD_VENDOR', response.data.vendor)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -58,6 +61,7 @@ export async function updateVendor({ commit }, vendor) {
     try {
         const response = await axios.put('/api/vendor/' + vendor.id, vendor)
         commit('CHANGE_VENDOR', response.data.vendor)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -69,6 +73,7 @@ export async function deleteVendor({ commit }, { id }) {
     try {
         const response = await axios.delete('/api/vendor/' + id)
         commit('REMOVE_VENDOR', id)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })

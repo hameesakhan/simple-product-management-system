@@ -31,6 +31,7 @@ export async function fetchProducts({ commit }, page = 1) {
         const response = await axios.get(`/api/product?page=${page}`)
         commit('SET_PRODUCTS', response.data.products.data)
         commit('SET_PRODUCTS_PAGINATION', { total: response.data.total, per_page: response.data.per_page })
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -42,6 +43,7 @@ export async function fetchProduct({ commit }, { id }) {
     try {
         const response = await axios.get('/api/product/' + id)
         commit('SET_ACTIVE_PRODUCT', response.data.product)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -53,6 +55,7 @@ export async function createProduct({ commit }, product) {
     try {
         const response = await axios.post('/api/product', product)
         commit('ADD_PRODUCT', response.data.product)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -64,6 +67,7 @@ export async function updateProduct({ commit }, product) {
     try {
         const response = await axios.put('/api/product/' + product.id, product)
         commit('CHANGE_PRODUCT', response.data.product)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -75,6 +79,7 @@ export async function deleteProduct({ commit }, { id }) {
     try {
         const response = await axios.delete('/api/product/' + id)
         commit('REMOVE_PRODUCT', id)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })

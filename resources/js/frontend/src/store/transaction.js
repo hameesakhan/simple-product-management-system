@@ -31,6 +31,7 @@ export async function fetchTransactions({ commit }, page = 1) {
         const response = await axios.get(`/api/transaction?page=${page}`)
         commit('SET_TRANSACTIONS', response.data.transactions.data)
         commit('SET_TRANSACTIONS_PAGINATION', { total: response.data.total, per_page: response.data.per_page })
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -42,6 +43,7 @@ export async function fetchTransaction({ commit }, { id }) {
     try {
         const response = await axios.get('/api/transaction/' + id)
         commit('SET_ACTIVE_TRANSACTION', response.data.transaction)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -53,6 +55,7 @@ export async function createTransaction({ commit }, transaction) {
     try {
         const response = await axios.post('/api/transaction', transaction)
         commit('ADD_TRANSACTION', response.data.transaction)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -64,6 +67,7 @@ export async function updateTransaction({ commit }, transaction) {
     try {
         const response = await axios.put('/api/transaction/' + transaction.id, transaction)
         commit('CHANGE_TRANSACTION', response.data.transaction)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -75,6 +79,7 @@ export async function deleteTransaction({ commit }, { id }) {
     try {
         const response = await axios.delete('/api/transaction/' + id)
         commit('REMOVE_TRANSACTION', id)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })

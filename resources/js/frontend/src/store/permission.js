@@ -25,6 +25,7 @@ export async function fetchPermissions({ commit }) {
     try {
         const response = await axios.get('/api/permission')
         commit('SET_PERMISSIONS', response.data.permissions)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -36,6 +37,7 @@ export async function fetchPermission({ commit }, { id }) {
     try {
         const response = await axios.get('/api/permission/' + id)
         commit('SET_ACTIVE_PERMISSION', response.data.permission)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -47,6 +49,7 @@ export async function createPermission({ commit }, permission) {
     try {
         const response = await axios.post('/api/permission', permission)
         commit('ADD_PERMISSION', response.data.permission)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -58,6 +61,7 @@ export async function updatePermission({ commit }, permission) {
     try {
         const response = await axios.put('/api/permission/' + permission.id, permission)
         commit('CHANGE_PERMISSION', response.data.permission)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -69,6 +73,7 @@ export async function deletePermission({ commit }, { id }) {
     try {
         const response = await axios.delete('/api/permission/' + id)
         commit('REMOVE_PERMISSION', id)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })

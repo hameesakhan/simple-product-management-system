@@ -25,6 +25,7 @@ export async function fetchUsers({ commit }) {
     try {
         const response = await axios.get('/api/user')
         commit('SET_USERS', response.data.users)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -36,6 +37,7 @@ export async function fetchUser({ commit }, { id }) {
     try {
         const response = await axios.get('/api/user/' + id)
         commit('SET_ACTIVE_USER', response.data.user)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -47,6 +49,7 @@ export async function createUser({ commit }, user) {
     try {
         const response = await axios.post('/api/user', user)
         commit('ADD_USER', response.data.user)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -58,6 +61,7 @@ export async function updateUser({ commit }, user) {
     try {
         const response = await axios.put('/api/user/' + user.id, user)
         commit('CHANGE_USER', response.data.user)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
@@ -69,6 +73,7 @@ export async function deleteUser({ commit }, { id }) {
     try {
         const response = await axios.delete('/api/user/' + id)
         commit('REMOVE_USER', id)
+        commit('setError', { title: null, data: null })
     }
     catch (error) {
         commit('setError', { title: error.response.statusText, data: error.response.data })
