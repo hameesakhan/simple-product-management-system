@@ -76,7 +76,7 @@ class UsersDataTable extends DataTable
                 ->addClass('text-center'),
             Column::make('created_at'),
             Column::make('email'),
-            Column::make('roles'),
+            Column::make('roles')->searchable(false),
             Column::make('email_verified_at'),
             Column::make('id'),
             Column::make('name'),

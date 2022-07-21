@@ -87,17 +87,82 @@ export default {
                                 }
                             }).then((result) => {
                                 this.$store.dispatch('createUser', result.value).then(() => {
-                                    
+                                    dt.draw();
                                 })
                             })
                         }
+                    },
+                    {
+                        text: 'Edit',
+                        action: (e, dt, node, config) => {
+                            const selectedUsers = dt.rows({ selected: true }).data();
+                            if (selectedUsers.length) {
+                                const selectedUser = selectedUsers[0];
+                                const currentRoles = selectedUser.roles.map(r => r.name)
+                                this.$swal.fire({
+                                    title: 'Edit User',
+                                    html: `
+                                    <input type="text" id="name" class="swal2-input" placeholder="Name" value="${selectedUser.name}">
+                                    <input type="text" id="email" class="swal2-input" placeholder="Email"  value="${selectedUser.email}">
+                                    <input type="password" id="password" class="swal2-input" placeholder="Password">
+                                    <select id="role" class="swal2-input">
+                                        ${this.$store.state.roles.map(role => `<option value="${role.name}" ${currentRoles.indexOf(role.name) !== -1 ? 'selected' : ''}>${role.name}</option>`).join("\n")}
+                                    </select>
+                                    `,
+                                    confirmButtonText: 'Save',
+                                    focusConfirm: false,
+                                    preConfirm: () => {
+                                        const name = this.$swal.getPopup().querySelector('#name').value
+                                        const email = this.$swal.getPopup().querySelector('#email').value
+                                        const password = this.$swal.getPopup().querySelector('#password').value
+                                        const role = this.$swal.getPopup().querySelector('#role').value
+                                        if (!name || !email || !role) {
+                                            this.$swal.showValidationMessage(`All fields are mandatory except password`)
+                                        }
+                                        return { name, email, password, role }
+                                    }
+                                }).then((result) => {
+                                    this.$store.dispatch('updateUser', { ...result.value, id: selectedUser.id }).then(() => {
+                                        dt.draw();
+                                    })
+                                })
+                            }
+                        }
+                    },
+                    {
+                        text: 'Delete',
+                        action: (e, dt, node, config) => {
+                            const selectedUsers = dt.rows({ selected: true }).data();
+                            if (selectedUsers.length) {
+                                const selectedUser = selectedUsers[0];
+                                this.$swal.fire({
+                                    title: 'Are you sure?',
+                                    text: "You won't be able to revert this!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, delete it!'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        this.$store.dispatch('deleteUser', { id: selectedUser.id }).then(() => {
+                                            dt.draw();
+                                        })
+                                    }
+                                })
+                            }
+                        }
                     }
                 ],
-                select: true,
+                select: {
+                    style: 'single'
+                },
                 searchPanes: {
                     'serverSide': true,
                 },
                 columnDefs: [
+
+                    { "searchable": false, "targets": [3, 6] },
                     {
                         searchPanes: {
                             show: true,
@@ -107,32 +172,26 @@ export default {
                     {
                         targets: [-1],
                         data: null,
-                        defaultContent: '<button>Click!</button>',
+                        render: (data, type, row, meta) => {
+                            return ` `
+                        }
                     }
                 ],
+                select: 'single',
                 'serverSide': true,
                 'processing': true,
                 'ajax': {
                     'url': '/api\/user',
                     'type': 'GET',
-                    // 'data': function (data) {
-                    //     for (var i = 0, len = data.columns.length; i < len; i++) {
-                    //         if (!data.columns[i].search.value) delete data.columns[i].search;
-                    //         if (data.columns[i].searchable === true) delete data.columns[i].searchable;
-                    //         if (data.columns[i].orderable === true) delete data.columns[i].orderable;
-                    //         if (data.columns[i].data === data.columns[i].name) delete data.columns[i].name;
-                    //     }
-                    //     delete data.search.regex;
-                    // },
                 },
                 'columns': [
-                    { 'data': 'action', 'name': 'action', 'title': 'Action', 'orderable': false, 'searchable': false, 'width': 60, 'className': 'text-center' },
-                    { 'data': 'created_at', 'name': 'created_at', 'title': 'Created At', 'orderable': true, 'searchable': true },
-                    { 'data': 'email', 'name': 'email', 'title': 'Email', 'orderable': true, 'searchable': true },
-                    { 'data': 'email_verified_at', 'name': 'email_verified_at', 'title': 'Email Verified At', 'orderable': true, 'searchable': true },
                     { 'data': 'id', 'name': 'id', 'title': 'Id', 'orderable': true, 'searchable': true },
                     { 'data': 'name', 'name': 'name', 'title': 'Name', 'orderable': true, 'searchable': true },
+                    { 'data': 'email', 'name': 'email', 'title': 'Email', 'orderable': true, 'searchable': true },
+                    { 'data': 'roles', 'name': 'roles', 'title': 'Email', 'orderable': false, 'searchable': false },
+                    { 'data': 'created_at', 'name': 'created_at', 'title': 'Created At', 'orderable': true, 'searchable': true },
                     { 'data': 'updated_at', 'name': 'updated_at', 'title': 'Updated At', 'orderable': true, 'searchable': true },
+                    { 'data': 'action', 'name': 'action', 'title': 'Action', 'orderable': false, 'searchable': false, 'width': 60, 'className': 'text-center' },
                 ],
                 'dom': 'Bfrtip',
                 'order': [[1, 'desc']],

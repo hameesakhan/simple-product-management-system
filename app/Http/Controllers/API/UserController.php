@@ -26,4 +26,24 @@ class UserController extends Controller
         $user->load('roles');
         return ['user' => $user];
     }
+
+    public function update(User $user, UserRequest $request)
+    {
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if (strlen($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        $user->syncRoles([$request->role]);
+
+        $user->load('roles');
+        return ['user' => $user];
+    }
+
+    public function destroy(User $user)
+    {
+        return ['success' => $user->delete()];
+    }
 }
